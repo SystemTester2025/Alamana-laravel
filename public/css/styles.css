@@ -25,7 +25,7 @@
 
 @font-face {
     font-family: 'Almarai';
-    src: url('public/fonts/Almarai-ExtraBold.ttf') format('truetype');
+    src: url('../fonts/Almarai-ExtraBold.ttf') format('truetype');
     font-weight: 800;
     font-style: normal;
     font-display: swap;
@@ -256,29 +256,32 @@ body {
     transform: none;
 }
 .logo-curved-bg::before {
-    content: '';
-    background-image: url('public/images/static/shapes/rectangle-white.svg');
+    content: "";
     position: absolute;
-    
-    rotate: 273deg;
-    top: -168px;
-    left: -42px;
-    width: 100%;
-    height: 100%;
-    z-index: -1;
+    width: 12rem;
+    height: 12rem;
+    top: -4rem;
+    right: -4rem;
+    background-image: url('../images/static/shapes/rectangle-white.svg');
+    background-size: contain;
     background-repeat: no-repeat;
+    opacity: 0.15;
+    z-index: -1;
+    transform: rotate(45deg);
 }
 .logo-curved-bg::after {
-    content: '';
-    background-image: url('public/images/static/shapes/rectangle-white.svg');
+    content: "";
     position: absolute;
-    rotate: 270deg;
-    bottom: -66px;
-    right: -191px;
-    width: 100%;
-    height: 100%;
-    z-index: -1;
+    width: 12rem;
+    height: 12rem;
+    bottom: -3rem;
+    left: -3rem;
+    background-image: url('../images/static/shapes/rectangle-white.svg');
+    background-size: contain;
     background-repeat: no-repeat;
+    opacity: 0.15;
+    z-index: -1;
+    transform: rotate(45deg);
 }
 
 /* Top Right Logo */
@@ -1595,18 +1598,17 @@ body {
 .company-leaf-icon::before{
     content: "";
     position: absolute;
-    top: -56px;
-    left: -28px;
     width: 100%;
-    rotate: 150%;
-    width: 170%;
-    height: 150%;
-
-    background-image: url("public/images/static/shapes/company-static.svg");
-    background-size: cover;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-image: url("../images/static/shapes/company-static.svg");
+    background-size: 80%;
     background-position: center;
     background-repeat: no-repeat;
-    /* opacity: 0.5; */
+    opacity: 0.8;
+    z-index: -1;
+    animation: rotate 30s linear infinite;
 }
  
 
@@ -2565,31 +2567,31 @@ button.section-heading-container[aria-expanded="true"] .arrow-icon svg {
 .product-label::after {
     content: "";
     position: absolute;
-    background-image: url(public/css/shapes/rectangle-white.svg);
-    background-size: cover;
-    background-position: center;
+    width: 6rem;
+    height: 6rem;
+    bottom: -1.5rem;
+    right: -1.5rem;
+    background-image: url(../images/static/shapes/rectangle-white.svg);
+    background-size: contain;
     background-repeat: no-repeat;
-    width: 39%;
-    height: 62%;
-    background-color: transparent;
-    bottom: -4px;
-    right: 99%;
-    z-index: 2;
+    opacity: 0.3;
+    z-index: -1;
+    transform: rotate(45deg);
 }
 
 .product-label::before {
     content: "";
     position: absolute;
-    background-image: url(public/css/shapes/rectangle-white.svg);
-    background-size: cover;
-    background-position: center;
+    width: 6rem;
+    height: 6rem;
+    top: -1.5rem;
+    left: -1.5rem;
+    background-image: url(../images/static/shapes/rectangle-white.svg);
+    background-size: contain;
     background-repeat: no-repeat;
-    width: 27%;
-    height: 62%;
-    background-color: transparent;
-    bottom: 99%;
-    right: 0px;
-    z-index: 2;
+    opacity: 0.3;
+    z-index: -1;
+    transform: rotate(45deg);
 }
 
 /* Responsive styles for products section */
@@ -3278,7 +3280,7 @@ button.section-heading-container[aria-expanded="true"] .section-heading {
     }
     
     .image-text {
-        font-size: 0.8rem;
+        font-size: 0.95rem;
         line-height: 1.5;
         padding: 8px 12px;
         width: 140px;

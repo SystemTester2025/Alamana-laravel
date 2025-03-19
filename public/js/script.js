@@ -347,8 +347,8 @@ $(document).ready(function() {
         const leafCount = 20; // Number of leaves
         const leafColors = ['#21602B', '#8BB729', '#5A8F29', '#3D7A1F']; // Different green shades
         const leafSizes = [15, 20, 25, 30]; // Different sizes in pixels
-        const leafImages = ['public/images/leafs/leaf1.svg', 'public/images/leafs/leaf2.svg', 'public/images/leafs/leaf3.svg',
-             'public/images/leafs/leaf4.svg'];
+        const leafImages = ['images/leafs/leaf1.svg', 'images/leafs/leaf2.svg', 'images/leafs/leaf3.svg',
+             'images/leafs/leaf4.svg'];
         
         // Create and position leaves
         for (let i = 0; i < leafCount; i++) {
@@ -403,7 +403,7 @@ $(document).ready(function() {
         const wrapperWidth = wrapper.width();
         const leafColors = ['#21602B', '#8BB729', '#5A8F29', '#3D7A1F'];
         const leafSizes = [15, 20, 25, 30];
-        const leafImages = ['public/images/leafs/leaf1.svg', 'public/images/leafs/leaf2.svg', 'public/images/leafs/leaf3.svg', 'public/images/leafs/leaf4.svg'];
+        const leafImages = ['images/leafs/leaf1.svg', 'images/leafs/leaf2.svg', 'images/leafs/leaf3.svg', 'images/leafs/leaf4.svg'];
         
         // Random attributes
         const randomLeftPos = Math.floor(Math.random() * wrapperWidth);
