@@ -274,53 +274,67 @@
     <div class="container">
         <h2 class="section-title">المنتجات</h2>
         <div class="products-container row">
-            <!-- Product 1: Lentils -->
-            <div class="col-lg-4 col-md-6 col-12 mb-4">
-                <div class="product-item">
-                    <img src="{{ asset('images/products/roz.jpg') }}" alt="عدس" class="product-image">
-                    <div class="product-label">عدس</div>
+            @forelse($products as $product)
+                <div class="col-lg-4 col-md-6 col-12 mb-4">
+                    <div class="product-item">
+                        @if($product->image)
+                            <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->title }}" class="product-image">
+                        @else
+                            <img src="{{ asset('images/placeholder.jpg') }}" alt="{{ $product->title }}" class="product-image">
+                        @endif
+                        <div class="product-label">{{ $product->title }}</div>
+                    </div>
                 </div>
-            </div>
-            
-            <!-- Product 2: White Beans -->
-            <div class="col-lg-4 col-md-6 col-12 mb-4">
-                <div class="product-item">
-                    <img src="{{ asset('images/products/fasolia.jpg') }}" alt="فصوليا بيضاء" class="product-image">
-                    <div class="product-label">فصوليا بيضاء</div>
+            @empty
+                <!-- Fallback static products if no dynamic products are available -->
+                <!-- Product 1: Lentils -->
+                <div class="col-lg-4 col-md-6 col-12 mb-4">
+                    <div class="product-item">
+                        <img src="{{ asset('images/products/roz.jpg') }}" alt="عدس" class="product-image">
+                        <div class="product-label">عدس</div>
+                    </div>
                 </div>
-            </div>
-            
-            <!-- Product 3: Chickpeas -->
-            <div class="col-lg-4 col-md-6 col-12 mb-4">
-                <div class="product-item">
-                    <img src="{{ asset('images/products/homos.jpg') }}" alt="حمص" class="product-image">
-                    <div class="product-label">حمص</div>
+                
+                <!-- Product 2: White Beans -->
+                <div class="col-lg-4 col-md-6 col-12 mb-4">
+                    <div class="product-item">
+                        <img src="{{ asset('images/products/fasolia.jpg') }}" alt="فصوليا بيضاء" class="product-image">
+                        <div class="product-label">فصوليا بيضاء</div>
+                    </div>
                 </div>
-            </div>
-            
-            <!-- Product 4: Chickpeas -->
-            <div class="col-lg-4 col-md-6 col-12 mb-4">
-                <div class="product-item">
-                    <img src="{{ asset('images/products/trms.jpg') }}" alt="حمص" class="product-image">
-                    <div class="product-label">حمص</div>
+                
+                <!-- Product 3: Chickpeas -->
+                <div class="col-lg-4 col-md-6 col-12 mb-4">
+                    <div class="product-item">
+                        <img src="{{ asset('images/products/homos.jpg') }}" alt="حمص" class="product-image">
+                        <div class="product-label">حمص</div>
+                    </div>
                 </div>
-            </div>
-            
-            <!-- Product 5: Popcorn -->
-            <div class="col-lg-4 col-md-6 col-12 mb-4">
-                <div class="product-item">
-                    <img src="{{ asset('images/products/dora.jpg') }}" alt="ذرة فشار" class="product-image">
-                    <div class="product-label">ذرة فشار</div>
+                
+                <!-- Product 4: Chickpeas -->
+                <div class="col-lg-4 col-md-6 col-12 mb-4">
+                    <div class="product-item">
+                        <img src="{{ asset('images/products/trms.jpg') }}" alt="حمص" class="product-image">
+                        <div class="product-label">حمص</div>
+                    </div>
                 </div>
-            </div>
-            
-            <!-- Product 6: Fava Beans -->
-            <div class="col-lg-4 col-md-6 col-12 mb-4">
-                <div class="product-item">
-                    <img src="{{ asset('images/products/fol.jpg') }}" alt="فول" class="product-image">
-                    <div class="product-label">فول</div>
+                
+                <!-- Product 5: Popcorn -->
+                <div class="col-lg-4 col-md-6 col-12 mb-4">
+                    <div class="product-item">
+                        <img src="{{ asset('images/products/dora.jpg') }}" alt="ذرة فشار" class="product-image">
+                        <div class="product-label">ذرة فشار</div>
+                    </div>
                 </div>
-            </div>
+                
+                <!-- Product 6: Fava Beans -->
+                <div class="col-lg-4 col-md-6 col-12 mb-4">
+                    <div class="product-item">
+                        <img src="{{ asset('images/products/fol.jpg') }}" alt="فول" class="product-image">
+                        <div class="product-label">فول</div>
+                    </div>
+                </div>
+            @endforelse
         </div>
     </div>
 </section>

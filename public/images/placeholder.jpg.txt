@@ -1,0 +1,3 @@
+Please place a placeholder image named 'placeholder.jpg' in this directory.
+This image will be used for products that don't have an image uploaded.
+Recommended size: 800x600 pixels. 
