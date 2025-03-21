@@ -17,10 +17,12 @@
                     <thead>
                         <tr>
                             <th width="5%">#</th>
-                            <th width="15%">المفتاح</th>
-                            <th width="20%">العنوان</th>
-                            <th width="20%">العنوان الفرعي</th>
-                            <th width="25%">الوصف</th>
+                            <th width="15%">الاسم</th>
+                            <th width="10%">الرابط</th>
+                            <th width="10%">المفتاح</th>
+                            <th width="15%">العنوان</th>
+                            <th width="15%">العنوان الفرعي</th>
+                            <th width="15%">الوصف</th>
                             <th width="15%">الإجراءات</th>
                         </tr>
                     </thead>
@@ -28,10 +30,12 @@
                         @foreach($sections as $section)
                         <tr>
                             <td>{{ $section->id }}</td>
+                            <td>{{ $section->name }}</td>
+                            <td>{{ $section->slug }}</td>
                             <td>{{ $section->key }}</td>
                             <td>{{ $section->title }}</td>
                             <td>{{ $section->sub }}</td>
-                            <td>{{ Str::limit($section->desc, 50) }}</td>
+                            <td>{{ Str::limit($section->desc, 30) }}</td>
                             <td>
                                 <div class="btn-group" role="group">
                                     <a href="{{ route('sections.show', $section->id) }}" class="btn btn-sm btn-info">

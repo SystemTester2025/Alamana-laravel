@@ -32,13 +32,22 @@ class SectionController extends Controller
     public function store(Request $request)
     {
         $request->validate([
+            'name' => 'required|string|max:255',
+            'slug' => 'nullable|string|max:255|unique:sections,slug',
             'title' => 'required|string|max:255',
             'sub' => 'nullable|string|max:255',
             'desc' => 'nullable|string',
             'key' => 'required|string|max:255|unique:sections',
         ]);
 
-        Section::create($request->all());
+        $data = $request->all();
+        
+        // Generate slug from name if not provided
+        if (empty($data['slug'])) {
+            $data['slug'] = Str::slug($data['name']);
+        }
+
+        Section::create($data);
 
         return redirect()->route('sections.index')
             ->with('success', 'تم إنشاء القسم بنجاح');
@@ -70,13 +79,22 @@ class SectionController extends Controller
         $section = Section::findOrFail($id);
 
         $request->validate([
+            'name' => 'required|string|max:255',
+            'slug' => 'nullable|string|max:255|unique:sections,slug,' . $id,
             'title' => 'required|string|max:255',
             'sub' => 'nullable|string|max:255',
             'desc' => 'nullable|string',
             'key' => 'required|string|max:255|unique:sections,key,' . $id,
         ]);
 
-        $section->update($request->all());
+        $data = $request->all();
+        
+        // Generate slug from name if not provided
+        if (empty($data['slug'])) {
+            $data['slug'] = Str::slug($data['name']);
+        }
+
+        $section->update($data);
 
         return redirect()->route('sections.index')
             ->with('success', 'تم تحديث القسم بنجاح');

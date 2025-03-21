@@ -26,6 +26,8 @@ class DatabaseSeeder extends Seeder
             ProductSeeder::class,
             SectionSeeder::class,
             SectionPartSeeder::class,
+            SettingSeeder::class,
+            ImageSeeder::class,
         ]);
     }
 }

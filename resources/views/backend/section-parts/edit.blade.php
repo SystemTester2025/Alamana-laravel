@@ -22,7 +22,7 @@
                             <option value="" disabled>اختر القسم</option>
                             @foreach($sections as $section)
                                 <option value="{{ $section->id }}" {{ old('section_id', $sectionPart->section_id) == $section->id ? 'selected' : '' }}>
-                                    {{ $section->title }} ({{ $section->key }})
+                                    {{ $section->name }} ({{ $section->key }})
                                 </option>
                             @endforeach
                         </select>

@@ -43,6 +43,14 @@ class Section extends Model
                 $section->slug = Str::slug($section->name);
             }
         });
+        
+        /**
+         * Delete associated section parts when a section is deleted
+         * This is a backup to the database cascade constraint
+         */
+        static::deleting(function ($section) {
+            $section->sectionParts()->delete();
+        });
     }
     
     /**

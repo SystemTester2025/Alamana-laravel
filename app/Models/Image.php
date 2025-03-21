@@ -14,6 +14,7 @@ class Image extends Model
     protected $fillable = [
         'title',
         'path',
+        'url',
         'alt',
         'type',
         'sort_order',

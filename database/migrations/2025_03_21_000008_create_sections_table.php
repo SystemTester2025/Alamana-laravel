@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('sections', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('name')->default('قسم جديد');
             $table->string('slug')->unique();
-            $table->string('title');
+            $table->string('title')->nullable();
             $table->string('sub')->nullable();
             $table->text('desc')->nullable();
             $table->string('key')->unique();  // To identify different sections like hero, features, etc.

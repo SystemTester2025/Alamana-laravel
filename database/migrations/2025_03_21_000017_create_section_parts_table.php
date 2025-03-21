@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('section_parts', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
+            $table->string('title')->nullable();
             $table->string('sub')->nullable();
             $table->text('desc')->nullable();
             $table->foreignId('section_id')->constrained('sections')->onDelete('cascade');

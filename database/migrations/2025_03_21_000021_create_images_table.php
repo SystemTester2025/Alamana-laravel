@@ -14,7 +14,8 @@ return new class extends Migration
         Schema::create('images', function (Blueprint $table) {
             $table->id();
             $table->string('title')->nullable();
-            $table->string('path');
+            $table->string('path')->nullable();
+            $table->string('url')->nullable();
             $table->string('alt')->nullable();
             $table->string('type')->default('general'); // For categorizing images (gallery, product, etc.)
             $table->integer('sort_order')->default(0);
