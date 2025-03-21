@@ -532,10 +532,16 @@
     <div class="contact-container container">
         <div class="contact-content row">
             <div class="contact-info col-lg-9 order-lg-1">
-                <h2 class="contact-title">العنوان</h2>
+                <h2 class="contact-title">
+                    @if(isset($sectionsKeyed['contact-section']) && $sectionsKeyed['contact-section']->sectionParts->where('key', 'contact_address')->first())
+                        {{ $sectionsKeyed['contact-section']->sectionParts->where('key', 'contact_address')->first()->title }}
+                    @else
+                        العنوان
+                    @endif
+                </h2>
                 <div class="contact-address">
-                    @if(isset($settings) && $settings->address)
-                        <p>{{ $settings->address }}</p>
+                    @if(isset($sectionsKeyed['contact-section']) && $sectionsKeyed['contact-section']->sectionParts->where('key', 'contact_address')->first())
+                        {{ $sectionsKeyed['contact-section']->sectionParts->where('key', 'contact_address')->first()->desc }}
                     @else
                         <p>طريق السادات كفرداود عند مشارق التحرير</p>
                         <p>بجوار الكلية الجديدة/المنوفية/مصر</p>
