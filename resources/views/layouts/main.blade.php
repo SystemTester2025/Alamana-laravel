@@ -3,7 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@yield('title', 'الأمانة للاستيراد والتصدير')</title>
+    @if(isset($settings))
+        <title>@yield('title', $settings->title)</title>
+        <meta name="description" content="{{ $settings->description }}">
+        @if($settings->favicon)
+            <link rel="icon" href="{{ asset($settings->favicon) }}" type="image/x-icon">
+            <link rel="shortcut icon" href="{{ asset($settings->favicon) }}" type="image/x-icon">
+        @endif
+    @else
+        <title>@yield('title', 'الأمانة للاستيراد والتصدير')</title>
+    @endif
     <!-- Bootstrap RTL CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.rtl.min.css">
     <!-- Custom CSS -->
@@ -19,7 +28,11 @@
     <div class="preloader">
         <div class="preloader-content">
             <div class="preloader-logo">
-                <img src="{{ asset('images/loader/alamana-preloader-static.svg') }}" alt="الأمانة" class="preloader-svg">
+                @if(isset($settings) && $settings->logo)
+                    <img src="{{ asset($settings->logo) }}" alt="{{ $settings->title }}" class="preloader-svg">
+                @else
+                    <img src="{{ asset('images/loader/alamana-preloader-static.svg') }}" alt="الأمانة" class="preloader-svg">
+                @endif
             </div>
             <div class="preloader-text">
                 <h2>مرحبا بكم في الأمانه</h2>

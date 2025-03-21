@@ -2,8 +2,10 @@
 
 namespace App\Providers;
 
+use App\Models\Setting;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\View;
+use Illuminate\Support\Facades\Cache;
 
 /**
  * Service provider responsible for managing frontend components and views
@@ -20,13 +22,21 @@ class FrontendServiceProvider extends ServiceProvider
 
     /**
      * Bootstrap any application services related to the frontend
+     * Share settings with all frontend views
      */
     public function boot()
     {
-        // Share common data with all frontend views
+        // Share settings with all frontend views
         View::composer('frontend.*', function ($view) {
-            // Can share data that should be available in all frontend views
-            $view->with('appName', 'الأمانة للاستيراد والتصدير');
+            // Cache settings to avoid database query on every request
+            $settings = Cache::remember('site_settings', 60 * 24, function () {
+                return Setting::first();
+            });
+            
+            $view->with([
+                'settings' => $settings,
+                'appName' => $settings ? $settings->title : 'الأمانة للاستيراد والتصدير'
+            ]);
         });
     }
 } 

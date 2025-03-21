@@ -1,6 +1,6 @@
 @extends('layouts.main')
 
-@section('title', 'الأمانة للاستيراد والتصدير')
+@section('title', $settings->title ?? 'الأمانة للاستيراد والتصدير')
 
 @section('content')
 <div class="site-wrapper">
@@ -12,7 +12,11 @@
         <div class="logo-container">
             <div class="logo-curved-bg"></div>
             <div class="top-right-logo">
-                <img src="{{ asset('images/logo/logo.svg') }}" alt="الأمانة" class="logo">
+                @if(isset($settings) && $settings->logo)
+                    <img src="{{ asset($settings->logo) }}" alt="{{ $settings->title }}" class="logo">
+                @else
+                    <img src="{{ asset('images/logo/logo.svg') }}" alt="الأمانة" class="logo">
+                @endif
             </div>
         </div>
             
@@ -58,7 +62,7 @@
 
         <!-- Product Counter -->
         <div class="product-counter">
-            <div class="counter-text">+10</div>
+            <div class="counter-text">+{{ count($products) }}</div>
             <div class="counter-subtext">منتجات</div>
             <div class="product-dots">
                 <span class="dot dot-red"></span>
@@ -434,21 +438,33 @@
 <section class="contact-section container" id="contact">
     <img src="{{ asset('images/footer/footer.jpg') }}" alt="Footer background" class="contact-background">
     <div class="contact-header">
-        <img src="{{ asset('images/logo/logo.svg') }}" alt="الأمانة" class="contact-logo">
+        @if(isset($settings) && $settings->footer_logo)
+            <img src="{{ asset($settings->footer_logo) }}" alt="{{ $settings->title }}" class="contact-logo">
+        @else
+            <img src="{{ asset('images/logo/logo.svg') }}" alt="الأمانة" class="contact-logo">
+        @endif
     </div>
     <div class="contact-container container">
         <div class="contact-content row">
             <div class="contact-info col-lg-9 order-lg-1">
                 <h2 class="contact-title">العنوان</h2>
                 <div class="contact-address">
-                    <p>طريق السادات كفرداود عند مشارق التحرير</p>
-                    <p>بجوار الكلية الجديدة/المنوفية/مصر</p>
+                    @if(isset($settings) && $settings->address)
+                        <p>{{ $settings->address }}</p>
+                    @else
+                        <p>طريق السادات كفرداود عند مشارق التحرير</p>
+                        <p>بجوار الكلية الجديدة/المنوفية/مصر</p>
+                    @endif
                 </div>
                 <h2 class="contact-title">تليفون+واتس اب</h2>
                 <div class="contact-phones">
                     <div class="phone-column">
-                        <div class="phone-number">01003103589</div>
-                        <div class="phone-number">01024113153</div>
+                        @if(isset($settings) && $settings->phone)
+                            <div class="phone-number">{{ $settings->phone }}</div>
+                        @else
+                            <div class="phone-number">01003103589</div>
+                            <div class="phone-number">01024113153</div>
+                        @endif
                     </div>
                     <div class="phone-column">
                         <div class="phone-number">01009594480</div>
