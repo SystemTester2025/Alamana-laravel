@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Models\Product;
+use App\Models\Setting;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -29,8 +30,10 @@ class HomeController extends Controller
         }
         
         $products = $featuredProducts->concat($otherProducts);
-        // dd($products);
         
-        return view('frontend.home', compact('products'));
+        // Get website settings
+        $settings = Setting::first();
+        
+        return view('frontend.home', compact('products', 'settings'));
     }
 } 

@@ -12,7 +12,7 @@
         <div class="logo-container">
             <div class="logo-curved-bg"></div>
             <div class="top-right-logo">
-                <img src="{{ asset('logo.svg') }}" alt="الأمانة" class="logo">
+                <img src="{{ asset('images/logo/logo.svg') }}" alt="الأمانة" class="logo">
             </div>
         </div>
             
@@ -434,7 +434,7 @@
 <section class="contact-section container" id="contact">
     <img src="{{ asset('images/footer/footer.jpg') }}" alt="Footer background" class="contact-background">
     <div class="contact-header">
-        <img src="{{ asset('logo.svg') }}" alt="الأمانة" class="contact-logo">
+        <img src="{{ asset('images/logo/logo.svg') }}" alt="الأمانة" class="contact-logo">
     </div>
     <div class="contact-container container">
         <div class="contact-content row">
