@@ -290,7 +290,7 @@
                                 </div>
                             </div>
                         @else
-                            <img src="{{ asset('images/placeholder.jpg') }}" alt="{{ $product->title }}" class="product-image">
+                            <img src="{{ asset('images/products/amana-product.jpeg') }}" alt="{{ $product->title }}" class="product-image">
                             <div class="product-hover">
                                 <div class="product-hover-content">
                                     <h4>{{ $product->title }}</h4>
