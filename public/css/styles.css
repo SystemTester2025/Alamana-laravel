@@ -1,7 +1,7 @@
 /* Font Face Declarations */
 @font-face {
     font-family: 'Almarai';
-    src: url('../fonts/Almarai-Regular.ttf') format('truetype');
+    src: url('/fonts/Almarai-Regular.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
     font-display: swap;
@@ -9,7 +9,7 @@
 
 @font-face {
     font-family: 'Almarai';
-    src: url('../fonts/Almarai-Bold.ttf') format('truetype');
+    src: url('/fonts/Almarai-Bold.ttf') format('truetype');
     font-weight: bold;
     font-style: normal;
     font-display: swap;
@@ -17,7 +17,7 @@
 
 @font-face {
     font-family: 'Almarai';
-    src: url('../fonts/Almarai-Light.ttf') format('truetype');
+    src: url('/fonts/Almarai-Light.ttf') format('truetype');
     font-weight: 300;
     font-style: normal;
     font-display: swap;
@@ -25,7 +25,7 @@
 
 @font-face {
     font-family: 'Almarai';
-    src: url('../fonts/Almarai-ExtraBold.ttf') format('truetype');
+    src: url('/fonts/Almarai-ExtraBold.ttf') format('truetype');
     font-weight: 800;
     font-style: normal;
     font-display: swap;
@@ -256,32 +256,29 @@ body {
     transform: none;
 }
 .logo-curved-bg::before {
-    content: "";
+    content: '';
+    background-image: url('/images/static/shapes/rectangle-white.svg');
     position: absolute;
-    width: 12rem;
-    height: 12rem;
-    top: -4rem;
-    right: -4rem;
-    background-image: url('../images/static/shapes/rectangle-white.svg');
-    background-size: contain;
-    background-repeat: no-repeat;
-    opacity: 0.15;
+    
+    rotate: 273deg;
+    top: -168px;
+    left: -42px;
+    width: 100%;
+    height: 100%;
     z-index: -1;
-    transform: rotate(45deg);
+    background-repeat: no-repeat;
 }
 .logo-curved-bg::after {
-    content: "";
+    content: '';
+    background-image: url('/images/static/shapes/rectangle-white.svg');
     position: absolute;
-    width: 12rem;
-    height: 12rem;
-    bottom: -3rem;
-    left: -3rem;
-    background-image: url('../images/static/shapes/rectangle-white.svg');
-    background-size: contain;
-    background-repeat: no-repeat;
-    opacity: 0.15;
+    rotate: 270deg;
+    bottom: -66px;
+    right: -191px;
+    width: 100%;
+    height: 100%;
     z-index: -1;
-    transform: rotate(45deg);
+    background-repeat: no-repeat;
 }
 
 /* Top Right Logo */
@@ -1598,17 +1595,18 @@ body {
 .company-leaf-icon::before{
     content: "";
     position: absolute;
+    top: -56px;
+    left: -28px;
     width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-    background-image: url("../images/static/shapes/company-static.svg");
-    background-size: 80%;
+    rotate: 150%;
+    width: 170%;
+    height: 150%;
+
+    background-image: url("/images/static/shapes/company-static.svg");
+    background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    opacity: 0.8;
-    z-index: -1;
-    animation: rotate 30s linear infinite;
+    /* opacity: 0.5; */
 }
  
 
@@ -2567,31 +2565,31 @@ button.section-heading-container[aria-expanded="true"] .arrow-icon svg {
 .product-label::after {
     content: "";
     position: absolute;
-    width: 6rem;
-    height: 6rem;
-    bottom: -1.5rem;
-    right: -1.5rem;
-    background-image: url(../images/static/shapes/rectangle-white.svg);
-    background-size: contain;
+    background-image: url('/images/static/shapes/rectangle-white.svg');
+    background-size: cover;
+    background-position: center;
     background-repeat: no-repeat;
-    opacity: 0.3;
-    z-index: -1;
-    transform: rotate(45deg);
+    width: 39%;
+    height: 62%;
+    background-color: transparent;
+    bottom: -4px;
+    right: 99%;
+    z-index: 2;
 }
 
 .product-label::before {
     content: "";
     position: absolute;
-    width: 6rem;
-    height: 6rem;
-    top: -1.5rem;
-    left: -1.5rem;
-    background-image: url(../images/static/shapes/rectangle-white.svg);
-    background-size: contain;
+    background-image: url('/images/static/shapes/rectangle-white.svg');
+    background-size: cover;
+    background-position: center;
     background-repeat: no-repeat;
-    opacity: 0.3;
-    z-index: -1;
-    transform: rotate(45deg);
+    width: 27%;
+    height: 62%;
+    background-color: transparent;
+    bottom: 99%;
+    right: 0px;
+    z-index: 2;
 }
 
 /* Responsive styles for products section */
@@ -3280,7 +3278,7 @@ button.section-heading-container[aria-expanded="true"] .section-heading {
     }
     
     .image-text {
-        font-size: 0.95rem;
+        font-size: 0.8rem;
         line-height: 1.5;
         padding: 8px 12px;
         width: 140px;

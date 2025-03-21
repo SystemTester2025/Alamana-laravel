@@ -278,9 +278,21 @@
                 <div class="col-lg-4 col-md-6 col-12 mb-4">
                     <div class="product-item">
                         @if($product->image)
-                            <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->title }}" class="product-image">
+                            <img src="{{ asset($product->image) }}" alt="{{ $product->title }}" class="product-image">
+                            <div class="product-hover">
+                                <div class="product-hover-content">
+                                    <h4>{{ $product->title }}</h4>
+                                    <p>{{ $product->sub_title }}</p>
+                                </div>
+                            </div>
                         @else
                             <img src="{{ asset('images/placeholder.jpg') }}" alt="{{ $product->title }}" class="product-image">
+                            <div class="product-hover">
+                                <div class="product-hover-content">
+                                    <h4>{{ $product->title }}</h4>
+                                    <p>{{ $product->sub_title }}</p>
+                                </div>
+                            </div>
                         @endif
                         <div class="product-label">{{ $product->title }}</div>
                     </div>
@@ -291,6 +303,12 @@
                 <div class="col-lg-4 col-md-6 col-12 mb-4">
                     <div class="product-item">
                         <img src="{{ asset('images/products/amana-product.jpeg') }}" alt="عدس" class="product-image">
+                        <div class="product-hover">
+                            <div class="product-hover-content">
+                                <h4>عدس</h4>
+                                <p>عدس مصري فاخر</p>
+                            </div>
+                        </div>
                         <div class="product-label">عدس</div>
                     </div>
                 </div>
@@ -298,7 +316,13 @@
                 <!-- Product 2: White Beans -->
                 <div class="col-lg-4 col-md-6 col-12 mb-4">
                     <div class="product-item">
-                        <img src="{{ asset('images/products/fasolia.jpg') }}" alt="فصوليا بيضاء" class="product-image">
+                        <img src="{{ asset('images/firm-section/firm-bg.jpeg') }}" alt="فصوليا بيضاء" class="product-image">
+                        <div class="product-hover">
+                            <div class="product-hover-content">
+                                <h4>فصوليا بيضاء</h4>
+                                <p>فصوليا بيضاء خالية من الشوائب</p>
+                            </div>
+                        </div>
                         <div class="product-label">فصوليا بيضاء</div>
                     </div>
                 </div>
@@ -306,7 +330,13 @@
                 <!-- Product 3: Chickpeas -->
                 <div class="col-lg-4 col-md-6 col-12 mb-4">
                     <div class="product-item">
-                        <img src="{{ asset('images/products/homos.jpg') }}" alt="حمص" class="product-image">
+                        <img src="{{ asset('images/firm-section/firm-bg.jpeg') }}" alt="حمص" class="product-image">
+                        <div class="product-hover">
+                            <div class="product-hover-content">
+                                <h4>حمص</h4>
+                                <p>حمص مصري فاخر</p>
+                            </div>
+                        </div>
                         <div class="product-label">حمص</div>
                     </div>
                 </div>
@@ -315,6 +345,12 @@
                 <div class="col-lg-4 col-md-6 col-12 mb-4">
                     <div class="product-item">
                         <img src="{{ asset('images/products/trms.jpg') }}" alt="حمص" class="product-image">
+                        <div class="product-hover">
+                            <div class="product-hover-content">
+                                <h4>ترمس</h4>
+                                <p>ترمس مصري فاخر</p>
+                            </div>
+                        </div>
                         <div class="product-label">حمص</div>
                     </div>
                 </div>
@@ -323,6 +359,12 @@
                 <div class="col-lg-4 col-md-6 col-12 mb-4">
                     <div class="product-item">
                         <img src="{{ asset('images/products/dora.jpg') }}" alt="ذرة فشار" class="product-image">
+                        <div class="product-hover">
+                            <div class="product-hover-content">
+                                <h4>ذرة فشار</h4>
+                                <p>ذرة فشار عالية الجودة</p>
+                            </div>
+                        </div>
                         <div class="product-label">ذرة فشار</div>
                     </div>
                 </div>
@@ -331,12 +373,61 @@
                 <div class="col-lg-4 col-md-6 col-12 mb-4">
                     <div class="product-item">
                         <img src="{{ asset('images/products/fol.jpg') }}" alt="فول" class="product-image">
+                        <div class="product-hover">
+                            <div class="product-hover-content">
+                                <h4>فول</h4>
+                                <p>فول مصري فاخر</p>
+                            </div>
+                        </div>
                         <div class="product-label">فول</div>
                     </div>
                 </div>
             @endforelse
         </div>
     </div>
+    
+    <style>
+        .product-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .product-item:hover {
+            transform: translateY(-5px);
+        }
+        
+        .product-hover {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .product-item:hover .product-hover {
+            opacity: 1;
+        }
+        
+        .product-hover-content {
+            text-align: center;
+            color: white;
+            padding: 20px;
+        }
+        
+        .product-hover-content h4 {
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+    </style>
 </section>
 
 <!-- Contact Section -->

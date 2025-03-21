@@ -66,7 +66,7 @@
                 <div class="col-md-6">
                     <div class="text-center">
                         @if($product->image)
-                            <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->title }}" class="img-fluid rounded" style="max-height: 400px;">
+                            <img src="{{ asset($product->image) }}" alt="{{ $product->title }}" class="img-fluid rounded" style="max-height: 400px;">
                         @else
                             <div class="p-5 bg-light text-center rounded">
                                 <i class="fas fa-image fa-5x text-muted"></i>

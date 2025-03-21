@@ -29,6 +29,7 @@ class HomeController extends Controller
         }
         
         $products = $featuredProducts->concat($otherProducts);
+        // dd($products);
         
         return view('frontend.home', compact('products'));
     }
