@@ -36,6 +36,7 @@ class SectionPartSeeder extends Seeder
                 'section_id' => $featuresSection->id,
                 'key' => 'feature_network',
                 'sort_order' => 1,
+                'image' => 'images/features/features-network.svg',
             ]);
             
             SectionPart::create([
@@ -44,6 +45,7 @@ class SectionPartSeeder extends Seeder
                 'section_id' => $featuresSection->id,
                 'key' => 'feature_quality',
                 'sort_order' => 2,
+                'image' => 'images/features/features-quality.svg',
             ]);
             
             SectionPart::create([
@@ -52,6 +54,7 @@ class SectionPartSeeder extends Seeder
                 'section_id' => $featuresSection->id,
                 'key' => 'feature_service',
                 'sort_order' => 3,
+                'image' => 'images/features/features-service.svg',
             ]);
         }
         

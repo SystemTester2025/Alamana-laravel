@@ -2677,7 +2677,7 @@ button.section-heading-container[aria-expanded="true"] .arrow-icon svg {
     position: relative;
     z-index: 2;
     padding-left: 0;
-    padding-right: 50px;
+    padding-right: 0px;
     max-width: 1400px;
     margin: 0 auto;
 }

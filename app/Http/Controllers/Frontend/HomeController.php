@@ -4,12 +4,13 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Models\Product;
+use App\Models\Section;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
     /**
-     * Display the homepage with featured products
+     * Display the homepage with featured products and sections
      *
      * @return \Illuminate\Http\Response
      */
@@ -30,6 +31,14 @@ class HomeController extends Controller
         
         $products = $featuredProducts->concat($otherProducts);
         
-        return view('frontend.home', compact('products'));
+        // Get all sections with their section parts
+        $sections = Section::with(['sectionParts' => function($query) {
+            $query->orderBy('sort_order', 'asc');
+        }])->get();
+        
+        // Convert sections to a keyed collection for easier access in views
+        $sectionsKeyed = $sections->keyBy('slug');
+        
+        return view('frontend.home', compact('products', 'sections', 'sectionsKeyed'));
     }
 } 
