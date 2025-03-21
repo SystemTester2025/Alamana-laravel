@@ -58,7 +58,11 @@ class ProductController extends Controller
         $product->featured = $request->has('featured') ? 1 : 0;
 
         if ($request->hasFile('image')) {
-            $product->image = $request->file('image')->store('products', 'public');
+            // dd($request->image);
+            $imagePath = 'images/products';
+            $imageName = time() . '_' . $request->file('image')->getClientOriginalName();
+            $request->file('image')->move(public_path($imagePath), $imageName);
+            $product->image = $imagePath . '/' . $imageName;
         }
 
         $product->save();
@@ -122,10 +126,13 @@ class ProductController extends Controller
 
         if ($request->hasFile('image')) {
             // Delete old image if exists
-            if ($product->image && Storage::disk('public')->exists($product->image)) {
-                Storage::disk('public')->delete($product->image);
+            if ($product->image && file_exists(public_path($product->image))) {
+                unlink(public_path($product->image));
             }
-            $product->image = $request->file('image')->store('products', 'public');
+            $imagePath = 'images/products';
+            $imageName = time() . '_' . $request->file('image')->getClientOriginalName();
+            $request->file('image')->move(public_path($imagePath), $imageName);
+            $product->image = $imagePath . '/' . $imageName;
         }
 
         $product->save();
@@ -149,8 +156,8 @@ class ProductController extends Controller
         $productTitle = $product->title;
         
         // Delete product image if exists
-        if ($product->image && Storage::disk('public')->exists($product->image)) {
-            Storage::disk('public')->delete($product->image);
+        if ($product->image && file_exists(public_path($product->image))) {
+            unlink(public_path($product->image));
         }
 
         $product->delete();
