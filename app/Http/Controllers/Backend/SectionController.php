@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
 use App\Models\Section;
+use App\Services\ActivityLogService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -47,10 +48,12 @@ class SectionController extends Controller
             $data['slug'] = Str::slug($data['name']);
         }
 
-        Section::create($data);
+        $section = Section::create($data);
+        
+        // Log the section creation activity
+        ActivityLogService::logCreated($section, "تم إنشاء قسم جديد: {$section->name}");
 
-        return redirect()->route('sections.index')
-            ->with('success', 'تم إنشاء القسم بنجاح');
+        return redirect()->route('sections.index')->with('success', 'تم إنشاء القسم بنجاح');
     }
 
     /**
@@ -77,7 +80,7 @@ class SectionController extends Controller
     public function update(Request $request, string $id)
     {
         $section = Section::findOrFail($id);
-
+        
         $request->validate([
             'name' => 'required|string|max:255',
             'slug' => 'nullable|string|max:255|unique:sections,slug,' . $id,
@@ -93,11 +96,16 @@ class SectionController extends Controller
         if (empty($data['slug'])) {
             $data['slug'] = Str::slug($data['name']);
         }
-
+        
+        // Save old attributes for logging
+        $oldAttributes = $section->toArray();
+        
         $section->update($data);
+        
+        // Log the section update activity
+        ActivityLogService::logUpdated($section, $oldAttributes, "تم تحديث قسم: {$section->name}");
 
-        return redirect()->route('sections.index')
-            ->with('success', 'تم تحديث القسم بنجاح');
+        return redirect()->route('sections.index')->with('success', 'تم تحديث القسم بنجاح');
     }
 
     /**
@@ -106,9 +114,16 @@ class SectionController extends Controller
     public function destroy(string $id)
     {
         $section = Section::findOrFail($id);
+        
+        // Store section data for logging before deletion
+        $sectionData = $section->toArray();
+        $sectionName = $section->name;
+        
         $section->delete();
+        
+        // Log the section deletion activity
+        ActivityLogService::logDeleted(new Section($sectionData), "تم حذف قسم: {$sectionName}");
 
-        return redirect()->route('sections.index')
-            ->with('success', 'تم حذف القسم بنجاح');
+        return redirect()->route('sections.index')->with('success', 'تم حذف القسم بنجاح');
     }
 }

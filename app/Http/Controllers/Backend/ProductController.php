@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Product;
+use App\Services\ActivityLogService;
 use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
@@ -61,8 +62,11 @@ class ProductController extends Controller
         }
 
         $product->save();
+        
+        // Log the product creation activity
+        ActivityLogService::logCreated($product, "تم إنشاء منتج جديد: {$product->title}");
 
-        return redirect()->route('products.index')->with('success', 'تم إضافة المنتج بنجاح');
+        return redirect()->route('products.index')->with('success', 'تم إنشاء المنتج بنجاح');
     }
 
     /**
@@ -106,6 +110,9 @@ class ProductController extends Controller
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
+        // Save old attributes for logging
+        $oldAttributes = $product->toArray();
+        
         $product->title = $validated['title'];
         $product->sub_title = $validated['sub_title'] ?? null;
         $product->category = $validated['category'] ?? null;
@@ -122,6 +129,9 @@ class ProductController extends Controller
         }
 
         $product->save();
+        
+        // Log the product update activity
+        ActivityLogService::logUpdated($product, $oldAttributes, "تم تحديث منتج: {$product->title}");
 
         return redirect()->route('products.index')->with('success', 'تم تحديث المنتج بنجاح');
     }
@@ -134,12 +144,19 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
+        // Store product data for logging before deletion
+        $productData = $product->toArray();
+        $productTitle = $product->title;
+        
         // Delete product image if exists
         if ($product->image && Storage::disk('public')->exists($product->image)) {
             Storage::disk('public')->delete($product->image);
         }
 
         $product->delete();
+        
+        // Log the product deletion activity
+        ActivityLogService::logDeleted(new Product($productData), "تم حذف منتج: {$productTitle}");
 
         return redirect()->route('products.index')->with('success', 'تم حذف المنتج بنجاح');
     }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use App\Models\Section;
 use App\Models\SectionPart;
+use App\Services\ActivityLogService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -48,14 +49,17 @@ class SectionPartController extends Controller
         $data = $request->except('image');
         
         if ($request->hasFile('image')) {
-            $imagePath = $request->file('image')->store('section_parts', 'public');
-            $data['image'] = $imagePath;
+            $data['image'] = $request->file('image')->store('section-parts', 'public');
         }
+        
+        $sectionPart = SectionPart::create($data);
+        
+        // Log the section part creation activity
+        $section = Section::find($request->section_id);
+        $sectionName = $section ? $section->name : 'غير معروف';
+        ActivityLogService::logCreated($sectionPart, "تم إنشاء عنصر جديد في قسم {$sectionName}: {$sectionPart->title}");
 
-        SectionPart::create($data);
-
-        return redirect()->route('sections.show', $request->section_id)
-            ->with('success', 'تم إضافة محتوى القسم بنجاح');
+        return redirect()->route('section-parts.index')->with('success', 'تم إنشاء عنصر القسم بنجاح');
     }
 
     /**
@@ -83,7 +87,7 @@ class SectionPartController extends Controller
     public function update(Request $request, string $id)
     {
         $sectionPart = SectionPart::findOrFail($id);
-
+        
         $request->validate([
             'title' => 'required|string|max:255',
             'sub' => 'nullable|string|max:255',
@@ -97,20 +101,38 @@ class SectionPartController extends Controller
 
         $data = $request->except('image');
         
+        // Save old attributes for logging
+        $oldAttributes = $sectionPart->toArray();
+        $oldSectionId = $sectionPart->section_id;
+        
         if ($request->hasFile('image')) {
             // Delete old image if exists
             if ($sectionPart->image && Storage::disk('public')->exists($sectionPart->image)) {
                 Storage::disk('public')->delete($sectionPart->image);
             }
             
-            $imagePath = $request->file('image')->store('section_parts', 'public');
-            $data['image'] = $imagePath;
+            $data['image'] = $request->file('image')->store('section-parts', 'public');
         }
-
+        
         $sectionPart->update($data);
+        
+        // Log the section part update activity
+        $section = Section::find($request->section_id);
+        $sectionName = $section ? $section->name : 'غير معروف';
+        
+        // Check if section changed
+        $sectionChanged = $oldSectionId != $request->section_id;
+        if ($sectionChanged) {
+            $oldSection = Section::find($oldSectionId);
+            $oldSectionName = $oldSection ? $oldSection->name : 'غير معروف';
+            $message = "تم نقل عنصر \"{$sectionPart->title}\" من قسم {$oldSectionName} إلى قسم {$sectionName}";
+        } else {
+            $message = "تم تحديث عنصر في قسم {$sectionName}: {$sectionPart->title}";
+        }
+        
+        ActivityLogService::logUpdated($sectionPart, $oldAttributes, $message);
 
-        return redirect()->route('sections.show', $request->section_id)
-            ->with('success', 'تم تحديث محتوى القسم بنجاح');
+        return redirect()->route('section-parts.index')->with('success', 'تم تحديث عنصر القسم بنجاح');
     }
 
     /**
@@ -119,7 +141,12 @@ class SectionPartController extends Controller
     public function destroy(string $id)
     {
         $sectionPart = SectionPart::findOrFail($id);
-        $sectionId = $sectionPart->section_id;
+        
+        // Store data for logging before deletion
+        $sectionPartData = $sectionPart->toArray();
+        $sectionPartTitle = $sectionPart->title;
+        $section = Section::find($sectionPart->section_id);
+        $sectionName = $section ? $section->name : 'غير معروف';
         
         // Delete image if exists
         if ($sectionPart->image && Storage::disk('public')->exists($sectionPart->image)) {
@@ -127,8 +154,10 @@ class SectionPartController extends Controller
         }
         
         $sectionPart->delete();
+        
+        // Log the section part deletion activity
+        ActivityLogService::logDeleted(new SectionPart($sectionPartData), "تم حذف عنصر \"{$sectionPartTitle}\" من قسم {$sectionName}");
 
-        return redirect()->route('sections.show', $sectionId)
-            ->with('success', 'تم حذف محتوى القسم بنجاح');
+        return redirect()->route('section-parts.index')->with('success', 'تم حذف عنصر القسم بنجاح');
     }
 }

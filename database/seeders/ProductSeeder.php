@@ -20,6 +20,7 @@ class ProductSeeder extends Seeder
                 'category' => 'البقوليات',
                 'sort_order' => 1,
                 'featured' => true,
+                'image' => 'images/products/dora.jpg',
             ],
             [
                 'title' => 'فصوليا بيضاء',
@@ -28,6 +29,7 @@ class ProductSeeder extends Seeder
                 'category' => 'البقوليات',
                 'sort_order' => 2,
                 'featured' => true,
+                'image' => 'images/products/fasolia.jpg',
             ],
             [
                 'title' => 'حمص',
@@ -36,6 +38,7 @@ class ProductSeeder extends Seeder
                 'category' => 'البقوليات',
                 'sort_order' => 3,
                 'featured' => true,
+                'image' => 'images/products/homos.jpg',
             ],
             [
                 'title' => 'ترمس',
@@ -44,6 +47,7 @@ class ProductSeeder extends Seeder
                 'category' => 'البقوليات',
                 'sort_order' => 4,
                 'featured' => false,
+                'image' => 'images/products/trms.jpg',
             ],
             [
                 'title' => 'ذرة فشار',
@@ -52,6 +56,7 @@ class ProductSeeder extends Seeder
                 'category' => 'الحبوب',
                 'sort_order' => 5,
                 'featured' => false,
+                'image' => 'images/products/roz.jpg',
             ],
             [
                 'title' => 'فول',
@@ -60,6 +65,7 @@ class ProductSeeder extends Seeder
                 'category' => 'البقوليات',
                 'sort_order' => 6,
                 'featured' => false,
+                'image' => 'images/products/fol.jpg',
             ],
         ];
 

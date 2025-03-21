@@ -290,7 +290,7 @@
                 <!-- Product 1: Lentils -->
                 <div class="col-lg-4 col-md-6 col-12 mb-4">
                     <div class="product-item">
-                        <img src="{{ asset('images/products/roz.jpg') }}" alt="عدس" class="product-image">
+                        <img src="{{ asset('images/products/amana-product.jpeg') }}" alt="عدس" class="product-image">
                         <div class="product-label">عدس</div>
                     </div>
                 </div>

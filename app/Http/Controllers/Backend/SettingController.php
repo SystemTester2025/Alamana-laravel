@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
 use App\Models\Setting;
+use App\Services\ActivityLogService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -56,69 +57,68 @@ class SettingController extends Controller
      */
     public function edit(string $id)
     {
-        // Not needed for settings
+        $setting = Setting::findOrFail($id);
+        return view('backend.settings.edit', compact('setting'));
     }
 
     /**
-     * Update the settings in storage.
+     * Update the specified resource in storage.
      */
     public function update(Request $request, string $id)
     {
-        $request->validate([
+        $validated = $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'nullable|string',
-            'email' => 'nullable|email|max:255',
-            'phone' => 'nullable|string|max:255',
+            'email' => 'nullable|email',
+            'phone' => 'nullable|string|max:20',
             'address' => 'nullable|string',
-            'facebook' => 'nullable|url|max:255',
-            'twitter' => 'nullable|url|max:255',
-            'instagram' => 'nullable|url|max:255',
-            'linkedin' => 'nullable|url|max:255',
+            'facebook' => 'nullable|string|url',
+            'twitter' => 'nullable|string|url',
+            'instagram' => 'nullable|string|url',
+            'linkedin' => 'nullable|string|url',
             'logo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'footer_logo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'favicon' => 'nullable|image|mimes:ico,png,jpg,jpeg|max:1024',
+            'favicon' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
-        
+
         $setting = Setting::findOrFail($id);
         
-        // Handle file uploads
-        $data = $request->except(['logo', 'footer_logo', 'favicon']);
-        
+        // Save old attributes for logging
+        $oldAttributes = $setting->toArray();
+
+        // Update basic fields
+        $setting->title = $validated['title'];
+        $setting->description = $validated['description'] ?? null;
+        $setting->email = $validated['email'] ?? null;
+        $setting->phone = $validated['phone'] ?? null;
+        $setting->address = $validated['address'] ?? null;
+        $setting->facebook = $validated['facebook'] ?? null;
+        $setting->twitter = $validated['twitter'] ?? null;
+        $setting->instagram = $validated['instagram'] ?? null;
+        $setting->linkedin = $validated['linkedin'] ?? null;
+
         // Handle logo upload
         if ($request->hasFile('logo')) {
             // Delete old logo if exists
             if ($setting->logo && Storage::disk('public')->exists($setting->logo)) {
                 Storage::disk('public')->delete($setting->logo);
             }
-            
-            $logoPath = $request->file('logo')->store('settings', 'public');
-            $data['logo'] = $logoPath;
+            $setting->logo = $request->file('logo')->store('settings', 'public');
         }
-        
-        // Handle footer logo upload
-        if ($request->hasFile('footer_logo')) {
-            // Delete old footer logo if exists
-            if ($setting->footer_logo && Storage::disk('public')->exists($setting->footer_logo)) {
-                Storage::disk('public')->delete($setting->footer_logo);
-            }
-            
-            $footerLogoPath = $request->file('footer_logo')->store('settings', 'public');
-            $data['footer_logo'] = $footerLogoPath;
-        }
-        
+
         // Handle favicon upload
         if ($request->hasFile('favicon')) {
             // Delete old favicon if exists
             if ($setting->favicon && Storage::disk('public')->exists($setting->favicon)) {
                 Storage::disk('public')->delete($setting->favicon);
             }
-            
-            $faviconPath = $request->file('favicon')->store('settings', 'public');
-            $data['favicon'] = $faviconPath;
+            $setting->favicon = $request->file('favicon')->store('settings', 'public');
         }
+
+        $setting->save();
         
-        $setting->update($data);
-        
+        // Log the settings update activity
+        ActivityLogService::logUpdated($setting, $oldAttributes, "تم تحديث إعدادات الموقع");
+
         return redirect()->route('settings.index')->with('success', 'تم تحديث الإعدادات بنجاح');
     }
 

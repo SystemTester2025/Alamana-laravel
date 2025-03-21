@@ -90,6 +90,16 @@
                             <i class="fas fa-cog me-2"></i> الإعدادات
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a href="{{ route('backup.index') }}" class="nav-link {{ request()->routeIs('backup.*') ? 'active' : '' }}">
+                            <i class="fas fa-database me-2"></i> النسخ الاحتياطي
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ route('activity-logs.index') }}" class="nav-link {{ request()->routeIs('activity-logs.*') ? 'active' : '' }}">
+                            <i class="fas fa-history me-2"></i> سجل النشاطات
+                        </a>
+                    </li>
                     <li class="nav-item mt-4">
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf

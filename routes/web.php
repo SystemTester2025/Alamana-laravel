@@ -8,6 +8,8 @@ use App\Http\Controllers\Backend\ImageController;
 use App\Http\Controllers\Backend\ProductController;
 use App\Http\Controllers\Backend\SettingController;
 use App\Http\Controllers\Backend\ContactController;
+use App\Http\Controllers\Backend\BackupController;
+use App\Http\Controllers\Backend\ActivityLogController;
 use App\Http\Controllers\Frontend\HomeController;
 
 Route::get('/', [HomeController::class, 'index']);
@@ -31,6 +33,15 @@ Route::prefix('admin')->middleware(['auth'])->group(function () {
     
     // Contact Management
     Route::resource('contacts', ContactController::class);
+    
+    // Backup and Restore
+    Route::get('backup', [BackupController::class, 'index'])->name('backup.index');
+    Route::post('backup/reset', [BackupController::class, 'resetSeeder'])->name('backup.reset');
+    
+    // Activity Logs
+    Route::get('activity-logs', [ActivityLogController::class, 'index'])->name('activity-logs.index');
+    Route::get('activity-logs/{activityLog}', [ActivityLogController::class, 'show'])->name('activity-logs.show');
+    Route::delete('activity-logs', [ActivityLogController::class, 'clear'])->name('activity-logs.clear');
 });
 
 // Auth Routes
