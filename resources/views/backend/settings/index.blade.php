@@ -125,7 +125,7 @@
                             <h5 class="mt-4 mb-3">شعارات الموقع</h5>
                             
                             <div class="row">
-                                <div class="col-md-6">
+                                <div class="col-md-4">
                                     <div class="form-group mb-3">
                                         <label for="logo">شعار الموقع</label>
                                         <input type="file" name="logo" id="logo" class="form-control @error('logo') is-invalid @enderror">
@@ -135,13 +135,14 @@
                                         
                                         @if($setting->logo)
                                             <div class="mt-2">
-                                                <img src="{{ asset('storage/' . $setting->logo) }}" alt="Logo" class="img-thumbnail" style="max-height: 100px">
+                                                <img src="{{asset($setting->logo)}}" alt="Logo" class="img-thumbnail" style="max-height: 100px">
+
                                             </div>
                                         @endif
                                     </div>
                                 </div>
                                 
-                                <div class="col-md-6">
+                                <div class="col-md-4">
                                     <div class="form-group mb-3">
                                         <label for="favicon">أيقونة الموقع (Favicon)</label>
                                         <input type="file" name="favicon" id="favicon" class="form-control @error('favicon') is-invalid @enderror">
@@ -151,7 +152,22 @@
                                         
                                         @if($setting->favicon)
                                             <div class="mt-2">
-                                                <img src="{{ asset('storage/' . $setting->favicon) }}" alt="Favicon" class="img-thumbnail" style="max-height: 50px">
+                                                <img src="{{ asset($setting->favicon)}}" alt="Favicon" class="img-thumbnail" style="max-height: 50px">
+                                            </div>
+                                        @endif
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group mb-3">
+                                        <label for="logo">شعار أخر الموقع</label>
+                                        <input type="file" name="footer_logo" id="footer_logo" class="form-control @error('footer_logo') is-invalid @enderror">
+                                        @error('logo')
+                                            <span class="invalid-feedback">{{ $message }}</span>
+                                        @enderror
+                                        
+                                        @if($setting->footer_logo)
+                                            <div class="mt-2">
+                                                <img src="{{asset($setting->footer_logo)}}" alt="Logo" class="img-thumbnail" style="max-height: 100px">
                                             </div>
                                         @endif
                                     </div>

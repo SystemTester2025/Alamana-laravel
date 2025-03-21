@@ -58,7 +58,7 @@ class SettingController extends Controller
     public function edit(string $id)
     {
         $setting = Setting::findOrFail($id);
-        return view('backend.settings.edit', compact('setting'));
+        return view('backend.settings.index', compact('setting'));
     }
 
     /**
@@ -78,6 +78,7 @@ class SettingController extends Controller
             'linkedin' => 'nullable|string|url',
             'logo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'favicon' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'footer_logo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
         $setting = Setting::findOrFail($id);
@@ -95,23 +96,41 @@ class SettingController extends Controller
         $setting->twitter = $validated['twitter'] ?? null;
         $setting->instagram = $validated['instagram'] ?? null;
         $setting->linkedin = $validated['linkedin'] ?? null;
+        // $setting->footer_logo = $validated['footer_logo'] ?? null;
+
+        // Handle favicon upload
+        if ($request->hasFile('favicon')) {
+            // Delete old logo if exists
+            if ($setting->favicon && file_exists(public_path($setting->favicon))) {
+                unlink(public_path($setting->favicon));
+            }
+            $imagePath = 'images/logo';
+            $imageName = time() . '_' . rand(1000, 9999) . '_' . $request->file('favicon')->getClientOriginalName();
+            $request->file('favicon')->move(public_path($imagePath), $imageName);
+            $setting->favicon = $imagePath . '/' . $imageName;
+        }
 
         // Handle logo upload
         if ($request->hasFile('logo')) {
             // Delete old logo if exists
-            if ($setting->logo && Storage::disk('public')->exists($setting->logo)) {
-                Storage::disk('public')->delete($setting->logo);
+            if ($setting->logo && file_exists(public_path($setting->logo))) {
+                unlink(public_path($setting->logo));
             }
-            $setting->logo = $request->file('logo')->store('settings', 'public');
+            $imagePath = 'images/logo';
+            $imageName = time() . '_' . rand(1000, 9999) . '_' . $request->file('favicon')->getClientOriginalName();
+            $request->file('logo')->move(public_path($imagePath), $imageName);
+            $setting->logo = $imagePath . '/' . $imageName;
         }
-
-        // Handle favicon upload
-        if ($request->hasFile('favicon')) {
-            // Delete old favicon if exists
-            if ($setting->favicon && Storage::disk('public')->exists($setting->favicon)) {
-                Storage::disk('public')->delete($setting->favicon);
+        //Handle a footer icon upload
+        if ($request->hasFile('footer_logo')) {
+            // Delete old logo if exists
+            if ($setting->footer_logo && file_exists(public_path($setting->footer_logo))) {
+                unlink(public_path($setting->footer_logo));
             }
-            $setting->favicon = $request->file('favicon')->store('settings', 'public');
+            $imagePath = 'images/logo';
+            $imageName = time() . '_' . rand(1000, 9999) . '_' . $request->file('favicon')->getClientOriginalName();
+            $request->file('footer_logo')->move(public_path($imagePath), $imageName);
+            $setting->footer_logo = $imagePath . '/' . $imageName;
         }
 
         $setting->save();
