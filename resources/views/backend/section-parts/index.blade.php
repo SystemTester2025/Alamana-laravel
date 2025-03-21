@@ -31,7 +31,7 @@
                         @foreach($sectionParts as $part)
                         <tr>
                             <td>{{ $part->id }}</td>
-                            <td>{{ $part->section->title }} ({{ $part->section->key }})</td>
+                            <td>{{ $part->section->name }}</td>
                             <td>{{ $part->title }}</td>
                             <td>{{ $part->sub ?: 'غير محدد' }}</td>
                             <td>{{ $part->key ?: 'غير محدد' }}</td>
