@@ -213,10 +213,14 @@
                 <div class="col-lg-4 order-lg-2">
                     <div class="management-image-card">
                         <div class="image-border">
-                            <img src="{{ asset('images/products/amana-product.jpeg') }}" alt="منتجات الأمانة" class="management-image">
-                            <div class="image-overlay">
-                                <p class="image-text">نحرص على تقديم<br>أسعار مناسبة تناسب<br>جميع أنواع الأسواق</p>
-                            </div>
+                            @if(isset($sectionsKeyed['management-section']) && $sectionsKeyed['management-section']->sectionParts->where('key', 'management_prices')->first())
+                                <img src="{{ asset($sectionsKeyed['management-section']->sectionParts->where('key', 'management_prices')->first()->image) }}" alt="منتجات الأمانة" class="management-image">
+                            @else
+                                <img src="{{ asset('images/products/amana-product.jpeg') }}" alt="منتجات الأمانة" class="management-image">
+                            @endif
+                            @if(isset($sectionsKeyed['management-section']) && $sectionsKeyed['management-section']->sectionParts->where('key', 'management_prices')->first())
+                            {!! $sectionsKeyed['management-section']->sectionParts->where('key', 'management_prices')->first()->desc !!}
+                            @endif
                         </div>
                     </div>
                 </div>

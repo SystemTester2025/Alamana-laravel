@@ -114,9 +114,13 @@ class SectionPartSeeder extends Seeder
             
             SectionPart::create([
                 'title' => 'أسعار مناسبة',
-                'desc' => 'نحرص على تقديم أسعار مناسبة تناسب جميع أنواع الأسواق',
+                'desc' => '<div class="image-overlay">
+                                    <p class="image-text">نحرص على تقديم<br>أسعار مناسبة تناسب<br>جميع أنواع الأسواق</p>
+                                </div>
+',
                 'section_id' => $managementSection->id,
                 'key' => 'management_prices',
+                'image' => 'images/products/amana-product.jpeg',
                 'sort_order' => 5,
             ]);
         }
