@@ -80,9 +80,26 @@
                 
                 <div class="mb-3">
                     <label for="desc" class="form-label">الوصف</label>
-                    <textarea class="form-control @error('desc') is-invalid @enderror" id="desc" name="desc" rows="5">{{ old('desc', $sectionPart->desc) }}</textarea>
+                    <input type="hidden" id="desc" name="desc" value="{{ old('desc', $sectionPart->desc) }}">
+                    
+                    <div class="card">
+                        <div class="card-header bg-light">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span>محتوى الوصف</span>
+                                <button type="button" class="btn btn-sm btn-primary" id="editTextBtn">
+                                    <i class="fas fa-edit me-1"></i> تعديل النص
+                                </button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div id="descPreview" class="p-3 border rounded bg-white">
+                                {!! old('desc', $sectionPart->desc) !!}
+                            </div>
+                        </div>
+                    </div>
+                    
                     @error('desc')
-                        <div class="invalid-feedback">{{ $message }}</div>
+                        <div class="text-danger mt-2">{{ $message }}</div>
                     @enderror
                 </div>
                 
@@ -109,4 +126,140 @@
         </div>
     </div>
 </div>
-@endsection 
+
+<!-- Modal for text editing -->
+<div class="modal fade" id="textEditModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">تعديل النص</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div id="textEditorContainer">
+                    <!-- Editable text fields will be inserted here -->
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">إلغاء</button>
+                <button type="button" class="btn btn-primary" id="saveTextEdits">حفظ التغييرات</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@endsection
+
+@push('scripts')
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const editTextBtn = document.getElementById('editTextBtn');
+        const descField = document.getElementById('desc');
+        const descPreview = document.getElementById('descPreview');
+        const textEditorContainer = document.getElementById('textEditorContainer');
+        const saveTextEdits = document.getElementById('saveTextEdits');
+        const textEditModal = new bootstrap.Modal(document.getElementById('textEditModal'));
+        
+        let htmlStructure = descField.value;
+        
+        editTextBtn.addEventListener('click', function() {
+            // Parse HTML content and create editable fields for text nodes
+            const tempDiv = document.createElement('div');
+            tempDiv.innerHTML = htmlStructure;
+            
+            // Clear the editor container
+            textEditorContainer.innerHTML = '';
+            
+            // Create a mapping of text content to form fields
+            const textNodes = [];
+            const editableFields = [];
+            
+            // Function to recursively find text nodes
+            function extractTextNodes(element, path = '') {
+                Array.from(element.childNodes).forEach((node, index) => {
+                    const currentPath = path ? `${path}-${index}` : `${index}`;
+                    
+                    if (node.nodeType === Node.TEXT_NODE) {
+                        // Only add non-empty text nodes (trimmed)
+                        const trimmedText = node.textContent.trim();
+                        if (trimmedText) {
+                            textNodes.push({
+                                path: currentPath,
+                                node: node,
+                                text: node.textContent
+                            });
+                        }
+                    } else if (node.nodeType === Node.ELEMENT_NODE) {
+                        extractTextNodes(node, currentPath);
+                    }
+                });
+            }
+            
+            extractTextNodes(tempDiv);
+            
+            // Create form fields for each text node
+            textNodes.forEach((item, idx) => {
+                const fieldGroup = document.createElement('div');
+                fieldGroup.className = 'mb-3';
+                
+                const label = document.createElement('label');
+                label.className = 'form-label';
+                label.textContent = `النص ${idx + 1}`;
+                
+                const input = document.createElement('input');
+                input.type = 'text';
+                input.className = 'form-control';
+                input.value = item.text;
+                input.dataset.path = item.path;
+                
+                fieldGroup.appendChild(label);
+                fieldGroup.appendChild(input);
+                textEditorContainer.appendChild(fieldGroup);
+                editableFields.push(input);
+            });
+            
+            textEditModal.show();
+        });
+        
+        saveTextEdits.addEventListener('click', function() {
+            // Get all input fields
+            const inputs = textEditorContainer.querySelectorAll('input');
+            
+            // Create a map of path to new text
+            const textUpdates = {};
+            inputs.forEach(input => {
+                textUpdates[input.dataset.path] = input.value;
+            });
+            
+            // Parse the original HTML
+            const tempDiv = document.createElement('div');
+            tempDiv.innerHTML = htmlStructure;
+            
+            // Function to update text nodes based on path
+            function updateTextNodes(element, path = '') {
+                Array.from(element.childNodes).forEach((node, index) => {
+                    const currentPath = path ? `${path}-${index}` : `${index}`;
+                    
+                    if (node.nodeType === Node.TEXT_NODE) {
+                        // Check if this node's path is in our updates
+                        if (textUpdates[currentPath] !== undefined) {
+                            node.textContent = textUpdates[currentPath];
+                        }
+                    } else if (node.nodeType === Node.ELEMENT_NODE) {
+                        updateTextNodes(node, currentPath);
+                    }
+                });
+            }
+            
+            updateTextNodes(tempDiv);
+            
+            // Update the preview and hidden field
+            htmlStructure = tempDiv.innerHTML;
+            descPreview.innerHTML = htmlStructure;
+            descField.value = htmlStructure;
+            
+            textEditModal.hide();
+        });
+    });
+</script>
+@endpush 
