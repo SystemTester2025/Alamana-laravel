@@ -105,14 +105,14 @@ class SectionPartController extends Controller
         $oldAttributes = $sectionPart->toArray();
         $oldSectionId = $sectionPart->section_id;
         
-        if ($request->hasFile('image')) {
-            // Delete old image if exists
-            if ($sectionPart->image && Storage::disk('public')->exists($sectionPart->image)) {
-                Storage::disk('public')->delete($sectionPart->image);
-            }
-            
-            $data['image'] = $request->file('image')->store('section-parts', 'public');
+        if ($request->hasFile('image') && $sectionPart->image) {
+            unlink(public_path($sectionPart->image));
         }
+        $imagePath = 'images/uploads';
+        $imageName = time() . '_' . rand(1000, 9999) . '_' . $request->file('image')->getClientOriginalName();
+        $request->file('image')->move(public_path($imagePath), $imageName);
+        $data['image'] = $imagePath . '/' . $imageName;
+
         
         $sectionPart->update($data);
         

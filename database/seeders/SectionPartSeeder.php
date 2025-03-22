@@ -129,15 +129,33 @@ class SectionPartSeeder extends Seeder
                         <p>بجوار الكلية الجديدة/المنوفية/مصر</p>',
                 'section_id' => $contactSection->id,
                 'key' => 'contact_address',
+                'image' => 'images/footer/footer.jpg',
                 'sort_order' => 1,
             ]);
             
             SectionPart::create([
                 'title' => 'تليفون+واتس اب',
-                'desc' => '<div class="phone-column">
-',
+                'desc' => '<div class="contact-phones">
+                        <div class="phone-column">
+                            <div class="phone-number">01003103589</div>
+                            <div class="phone-number">01024113153</div>
+                        </div>
+                        <div class="phone-column">
+                            <div class="phone-number">01009594480</div>
+                            <div class="phone-number">01093809980</div>
+                            <div class="phone-number">01000766218</div>
+                        </div>
+                    </div>',
                 'section_id' => $contactSection->id,
                 'key' => 'contact_phones',
+                'sort_order' => 2,
+            ]);
+
+            SectionPart::create([
+                'title' => 'الموقع',
+                'desc' => 'https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d6913.681934278306!2d30.9359!3d30.0759!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2seg!4v1645568556012!5m2!1sen!2seg',
+                'section_id' => $contactSection->id,
+                'key' => 'contact_map',
                 'sort_order' => 2,
             ]);
         }

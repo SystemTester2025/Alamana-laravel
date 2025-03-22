@@ -107,7 +107,7 @@
                     <label for="image" class="form-label">الصورة</label>
                     @if($sectionPart->image)
                         <div class="mb-2">
-                            <img src="{{ asset('storage/' . $sectionPart->image) }}" alt="{{ $sectionPart->title }}" class="img-thumbnail" style="max-height: 150px;">
+                            <img src="{{asset($sectionPart->image)}}" alt="{{ $sectionPart->title }}" class="img-thumbnail" style="max-height: 150px;">
                         </div>
                     @endif
                     <input type="file" class="form-control @error('image') is-invalid @enderror" id="image" name="image">
