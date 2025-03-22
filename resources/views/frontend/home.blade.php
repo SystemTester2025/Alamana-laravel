@@ -525,62 +525,68 @@
 
 <!-- Contact Section -->
 <section class="contact-section container" id="contact">
-    @if(isset($sectionsKeyed['contact-section']) && $sectionsKeyed['contact-section']->sectionParts->where('key', 'contact_address')->first())
-        <img src="{{ asset($sectionsKeyed['contact-section']->sectionParts->where('key', 'contact_address')->first()->image) }}" alt="Footer background" class="contact-background">
-    @else
-        <img src="{{ asset('images/footer/footer.jpg') }}" alt="Footer background" class="contact-background">
-    @endif
-    <div class="contact-header">
+    <div class="footer-logo">
         @if(isset($settings) && $settings->footer_logo)
-            <img src="{{ asset($settings->footer_logo) }}" alt="{{ $settings->title }}" class="contact-logo">
-        @else
-            <img src="{{ asset('images/logo/logo.svg') }}" alt="الأمانة" class="contact-logo">
-        @endif
+                <img src="{{ asset($settings->footer_logo) }}" alt="{{ $settings->title }}" class="contact-logo">
+            @else
+                <img src="{{ asset('images/logo/logo.svg') }}" alt="الأمانة" class="contact-logo">
+    @endif
     </div>
-    <div class="contact-container container">
-        <div class="contact-content row">
-            <div class="contact-info col-lg-9 order-lg-1">
-                <h2 class="contact-title">
-                    @if(isset($sectionsKeyed['contact-section']) && $sectionsKeyed['contact-section']->sectionParts->where('key', 'contact_address')->first())
-                        {{ $sectionsKeyed['contact-section']->sectionParts->where('key', 'contact_address')->first()->title }}
-                    @else
-                        العنوان
-                    @endif
-                </h2>
-                <div class="contact-address">
-                    @if(isset($sectionsKeyed['contact-section']) && $sectionsKeyed['contact-section']->sectionParts->where('key', 'contact_address')->first())
-                        {!! ($sectionsKeyed['contact-section']->sectionParts->where('key', 'contact_address')->first()->desc) !!}
-                    @else
-                        <p>طريق السادات كفرداود عند مشارق التحرير</p>
-                        <p>بجوار الكلية الجديدة/المنوفية/مصر</p>
-                    @endif
-                </div>
-                <h2 class="contact-title">تليفون+واتس اب</h2>
-                <div class="contact-phones">
-                    @if (isset($sectionsKeyed['contact-section']) && $sectionsKeyed['contact-section']->sectionParts->where('key', 'contact_phones')->first())
-                        {!! ($sectionsKeyed['contact-section']->sectionParts->where('key', 'contact_phones')->first()->desc) !!}
-                    @else
-                        <div class="phone-column">
-                        <div class="phone-number">01003103589</div>
-                        <div class="phone-number">01024113153</div>
-                    </div>
-                    <div class="phone-column">
-                        <div class="phone-number">01009594480</div>
-                        <div class="phone-number">01093809980</div>
-                        <div class="phone-number">01000766218</div>
+    
+    <div class="full-content">
+        @if(isset($sectionsKeyed['contact-section']) && $sectionsKeyed['contact-section']->sectionParts->where('key', 'contact_address')->first())
+            <img src="{{ asset($sectionsKeyed['contact-section']->sectionParts->where('key', 'contact_address')->first()->image) }}" alt="Footer background" class="contact-background">
+        @else
+            <img src="{{ asset('images/footer/footer.jpg') }}" alt="Footer background" class="contact-background">
+        @endif
+        <div class="contact-header">
+            
+        </div>
+        <div class="contact-container container">
+            <div class="contact-content">
+                <div class="row">
+                    <div class="contact-info col-lg-9 order-lg-1">
+                        <h2 class="contact-title">
+                        @if(isset($sectionsKeyed['contact-section']) && $sectionsKeyed['contact-section']->sectionParts->where('key', 'contact_address')->first())
+                            {{ $sectionsKeyed['contact-section']->sectionParts->where('key', 'contact_address')->first()->title }}
+                        @else
+                            العنوان
+                        @endif</h2>
+                        <div class="contact-address">
+                        @if(isset($sectionsKeyed['contact-section']) && $sectionsKeyed['contact-section']->sectionParts->where('key', 'contact_address')->first())
+                            {!! ($sectionsKeyed['contact-section']->sectionParts->where('key', 'contact_address')->first()->desc) !!}
+                        @else
+                            <p>طريق السادات كفرداود عند مشارق التحرير</p>
+                            <p>بجوار الكلية الجديدة/المنوفية/مصر</p>
+                        @endif
                         </div>
-                    @endif
-                </div>
-            </div>
-            <div class="contact-map col-lg-3 order-lg-2">
-                <div class="map-container">
-                    @if(isset($sectionsKeyed['contact-section']) && $sectionsKeyed['contact-section']->sectionParts->where('key', 'contact_map')->first())
-                    <iframe src="{{ ($sectionsKeyed['contact-section']->sectionParts->where('key', 'contact_map')->first()->desc) }}" allowfullscreen="" loading="lazy"></iframe>
-                    @endif
+                        <h2 class="contact-title">تليفون+واتس اب</h2>
+                        <div class="contact-phones">
+                            @if (isset($sectionsKeyed['contact-section']) && $sectionsKeyed['contact-section']->sectionParts->where('key', 'contact_phones')->first())
+                                {!! ($sectionsKeyed['contact-section']->sectionParts->where('key', 'contact_phones')->first()->desc) !!}
+                            @else
+                                <div class="phone-column">
+                                    <div class="phone-number">01003103589</div>
+                                    <div class="phone-number">01024113153</div>
+                                </div>
+                                <div class="phone-column">
+                                    <div class="phone-number">01009594480</div>
+                                    <div class="phone-number">01093809980</div>
+                                    <div class="phone-number">01000766218</div>
+                                </div>
+                            @endif
+                        </div>
+                    </div>
+                    <div class="contact-map col-lg-3 order-lg-2">
+                        <div class="map-container">
+                            @if(isset($sectionsKeyed['contact-section']) && $sectionsKeyed['contact-section']->sectionParts->where('key', 'contact_map')->first())
+                                <iframe src="{{ ($sectionsKeyed['contact-section']->sectionParts->where('key', 'contact_map')->first()->desc) }}" allowfullscreen="" loading="lazy"></iframe>
+                            @endif
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-        
     </div>
 </section>
 
