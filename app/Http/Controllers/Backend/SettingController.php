@@ -117,7 +117,7 @@ class SettingController extends Controller
                 unlink(public_path($setting->logo));
             }
             $imagePath = 'images/logo';
-            $imageName = time() . '_' . rand(1000, 9999) . '_' . $request->file('favicon')->getClientOriginalName();
+            $imageName = time() . '_' . rand(1000, 9999) . '_' . $request->file('logo')->getClientOriginalName();
             $request->file('logo')->move(public_path($imagePath), $imageName);
             $setting->logo = $imagePath . '/' . $imageName;
         }
@@ -128,7 +128,7 @@ class SettingController extends Controller
                 unlink(public_path($setting->footer_logo));
             }
             $imagePath = 'images/logo';
-            $imageName = time() . '_' . rand(1000, 9999) . '_' . $request->file('favicon')->getClientOriginalName();
+            $imageName = time() . '_' . rand(1000, 9999) . '_' . $request->file('footer_logo')->getClientOriginalName();
             $request->file('footer_logo')->move(public_path($imagePath), $imageName);
             $setting->footer_logo = $imagePath . '/' . $imageName;
         }

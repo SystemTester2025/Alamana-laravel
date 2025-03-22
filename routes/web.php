@@ -11,8 +11,10 @@ use App\Http\Controllers\Backend\ContactController;
 use App\Http\Controllers\Backend\BackupController;
 use App\Http\Controllers\Backend\ActivityLogController;
 use App\Http\Controllers\Frontend\HomeController;
+use App\Http\Controllers\Frontend\DynamicStylesController;
 
 Route::get('/', [HomeController::class, 'index']);
+Route::get('/css/dynamic-styles.css', [DynamicStylesController::class, 'css'])->name('dynamic.css');
 
 // Admin Dashboard Routes
 Route::prefix('admin')->middleware(['auth'])->group(function () {

@@ -378,11 +378,14 @@ body {
 
 /* Small brand logo for fixed navbar */
 .navbar.fixed-navbar::before {
+    /* This rule is now handled by dynamic CSS */
+    /* Commented out to prevent 404 errors */
+    /*
     content: '';
     position: absolute;
     width: 40px;
     height: 40px;
-    background-image: url('logo.svg');
+    background-image: url('/images/logo/logo.svg');
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
@@ -392,6 +395,8 @@ body {
     opacity: 1;
     transition: opacity 0.3s ease;
     display: none;
+    */
+    display: none; /* Keep this only */
 }
 
 @media (min-width: 992px) {
@@ -793,12 +798,15 @@ body {
     z-index: -1;
     border-radius: 80px 80px 0 0;
     background-repeat: no-repeat;
+    /* Ensure perfect centering */
+    margin: 0 auto;
+    right: auto;
 }
 
 .scroll-down a {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    /* align-items: center; */
     text-decoration: none;
     color: white;
 }

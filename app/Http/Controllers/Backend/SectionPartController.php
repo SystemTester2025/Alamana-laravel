@@ -106,16 +106,17 @@ class SectionPartController extends Controller
         $oldSectionId = $sectionPart->section_id;
         
         if ($request->hasFile('image')) {
-            // Delete old logo if exists
+            // Delete old image if exists
             if ($sectionPart->image && file_exists(public_path($sectionPart->image))) {
                 unlink(public_path($sectionPart->image));
             }
+            
+            // Store new image
             $imagePath = 'images/uploads';
-            $imageName = time() . '_' . rand(1000, 9999) . '_' . $request->file('favicon')->getClientOriginalName();
+            $imageName = time() . '_' . rand(1000, 9999) . '_' . $request->file('image')->getClientOriginalName();
             $request->file('image')->move(public_path($imagePath), $imageName);
-            $sectionPart->image = $imagePath . '/' . $imageName;
+            $data['image'] = $imagePath . '/' . $imageName;
         }
-
         
         $sectionPart->update($data);
         

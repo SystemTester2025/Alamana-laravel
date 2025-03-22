@@ -160,105 +160,163 @@
         const saveTextEdits = document.getElementById('saveTextEdits');
         const textEditModal = new bootstrap.Modal(document.getElementById('textEditModal'));
         
-        let htmlStructure = descField.value;
+        // Ensure there's always some content (use a dot as minimum)
+        let htmlStructure = descField.value || '.';
+        
+        // If the initial preview is empty, set it to a dot
+        if (descPreview.innerHTML.trim() === '') {
+            descPreview.innerHTML = '.';
+            descField.value = '.';
+        }
         
         editTextBtn.addEventListener('click', function() {
-            // Parse HTML content and create editable fields for text nodes
-            const tempDiv = document.createElement('div');
-            tempDiv.innerHTML = htmlStructure;
-            
-            // Clear the editor container
-            textEditorContainer.innerHTML = '';
-            
-            // Create a mapping of text content to form fields
-            const textNodes = [];
-            const editableFields = [];
-            
-            // Function to recursively find text nodes
-            function extractTextNodes(element, path = '') {
-                Array.from(element.childNodes).forEach((node, index) => {
-                    const currentPath = path ? `${path}-${index}` : `${index}`;
+            try {
+                // Parse HTML content and create editable fields for text nodes
+                const tempDiv = document.createElement('div');
+                tempDiv.innerHTML = htmlStructure;
+                
+                // Clear the editor container
+                textEditorContainer.innerHTML = '';
+                
+                // Create a mapping of text content to form fields
+                const textNodes = [];
+                const editableFields = [];
+                
+                // Function to recursively find text nodes
+                function extractTextNodes(element, path = '') {
+                    if (!element || !element.childNodes) return;
                     
-                    if (node.nodeType === Node.TEXT_NODE) {
-                        // Only add non-empty text nodes (trimmed)
-                        const trimmedText = node.textContent.trim();
-                        if (trimmedText) {
-                            textNodes.push({
-                                path: currentPath,
-                                node: node,
-                                text: node.textContent
-                            });
+                    Array.from(element.childNodes).forEach((node, index) => {
+                        const currentPath = path ? `${path}-${index}` : `${index}`;
+                        
+                        if (node.nodeType === Node.TEXT_NODE) {
+                            // Only add non-empty text nodes (trimmed)
+                            const trimmedText = node.textContent.trim();
+                            if (trimmedText) {
+                                textNodes.push({
+                                    path: currentPath,
+                                    node: node,
+                                    text: node.textContent
+                                });
+                            }
+                        } else if (node.nodeType === Node.ELEMENT_NODE) {
+                            extractTextNodes(node, currentPath);
                         }
-                    } else if (node.nodeType === Node.ELEMENT_NODE) {
-                        extractTextNodes(node, currentPath);
-                    }
-                });
+                    });
+                }
+                
+                extractTextNodes(tempDiv);
+                
+                // If no text nodes were found, add a message
+                if (textNodes.length === 0) {
+                    const noNodesMessage = document.createElement('div');
+                    noNodesMessage.className = 'alert alert-info';
+                    noNodesMessage.textContent = 'لم يتم العثور على نص للتحرير. سيتم إضافة نقطة كمحتوى افتراضي.';
+                    
+                    const defaultInput = document.createElement('textarea');
+                    defaultInput.className = 'form-control mt-3';
+                    defaultInput.value = '.';
+                    defaultInput.dataset.path = 'default';
+                    defaultInput.rows = 2;
+                    
+                    textEditorContainer.appendChild(noNodesMessage);
+                    textEditorContainer.appendChild(defaultInput);
+                    editableFields.push(defaultInput);
+                } else {
+                    // Create form fields for each text node
+                    textNodes.forEach((item, idx) => {
+                        const fieldGroup = document.createElement('div');
+                        fieldGroup.className = 'mb-3';
+                        
+                        const label = document.createElement('label');
+                        label.className = 'form-label';
+                        label.textContent = `النص ${idx + 1}`;
+                        
+                        const input = document.createElement('textarea');
+                        input.className = 'form-control';
+                        input.value = item.text;
+                        input.dataset.path = item.path;
+                        input.rows = Math.min(5, Math.max(2, (item.text.match(/\n/g) || []).length + 1));
+                        
+                        fieldGroup.appendChild(label);
+                        fieldGroup.appendChild(input);
+                        textEditorContainer.appendChild(fieldGroup);
+                        editableFields.push(input);
+                    });
+                }
+                
+                textEditModal.show();
+            } catch (error) {
+                console.error("Error processing HTML content:", error);
+                alert("حدث خطأ أثناء معالجة المحتوى. يرجى التحقق من التنسيق.");
             }
-            
-            extractTextNodes(tempDiv);
-            
-            // Create form fields for each text node
-            textNodes.forEach((item, idx) => {
-                const fieldGroup = document.createElement('div');
-                fieldGroup.className = 'mb-3';
-                
-                const label = document.createElement('label');
-                label.className = 'form-label';
-                label.textContent = `النص ${idx + 1}`;
-                
-                const input = document.createElement('input');
-                input.type = 'text';
-                input.className = 'form-control';
-                input.value = item.text;
-                input.dataset.path = item.path;
-                
-                fieldGroup.appendChild(label);
-                fieldGroup.appendChild(input);
-                textEditorContainer.appendChild(fieldGroup);
-                editableFields.push(input);
-            });
-            
-            textEditModal.show();
         });
         
         saveTextEdits.addEventListener('click', function() {
-            // Get all input fields
-            const inputs = textEditorContainer.querySelectorAll('input');
-            
-            // Create a map of path to new text
-            const textUpdates = {};
-            inputs.forEach(input => {
-                textUpdates[input.dataset.path] = input.value;
-            });
-            
-            // Parse the original HTML
-            const tempDiv = document.createElement('div');
-            tempDiv.innerHTML = htmlStructure;
-            
-            // Function to update text nodes based on path
-            function updateTextNodes(element, path = '') {
-                Array.from(element.childNodes).forEach((node, index) => {
-                    const currentPath = path ? `${path}-${index}` : `${index}`;
-                    
-                    if (node.nodeType === Node.TEXT_NODE) {
-                        // Check if this node's path is in our updates
-                        if (textUpdates[currentPath] !== undefined) {
-                            node.textContent = textUpdates[currentPath];
-                        }
-                    } else if (node.nodeType === Node.ELEMENT_NODE) {
-                        updateTextNodes(node, currentPath);
-                    }
+            try {
+                // Get all input fields
+                const inputs = textEditorContainer.querySelectorAll('textarea');
+                
+                // If there are no inputs, just close the modal
+                if (inputs.length === 0) {
+                    textEditModal.hide();
+                    return;
+                }
+                
+                // Check if we have the default input for empty content
+                const defaultInput = Array.from(inputs).find(input => input.dataset.path === 'default');
+                if (defaultInput) {
+                    // For empty content, just use the default input value
+                    const value = defaultInput.value.trim() === '' ? '.' : defaultInput.value;
+                    htmlStructure = value;
+                    descPreview.innerHTML = value;
+                    descField.value = value;
+                    textEditModal.hide();
+                    return;
+                }
+                
+                // Create a map of path to new text
+                const textUpdates = {};
+                inputs.forEach(input => {
+                    // If input is empty, add a dot as a placeholder
+                    const value = input.value.trim() === '' ? '.' : input.value;
+                    textUpdates[input.dataset.path] = value;
                 });
+                
+                // Parse the original HTML
+                const tempDiv = document.createElement('div');
+                tempDiv.innerHTML = htmlStructure;
+                
+                // Function to update text nodes based on path
+                function updateTextNodes(element, path = '') {
+                    if (!element || !element.childNodes) return;
+                    
+                    Array.from(element.childNodes).forEach((node, index) => {
+                        const currentPath = path ? `${path}-${index}` : `${index}`;
+                        
+                        if (node.nodeType === Node.TEXT_NODE) {
+                            // Check if this node's path is in our updates
+                            if (textUpdates[currentPath] !== undefined) {
+                                node.textContent = textUpdates[currentPath];
+                            }
+                        } else if (node.nodeType === Node.ELEMENT_NODE) {
+                            updateTextNodes(node, currentPath);
+                        }
+                    });
+                }
+                
+                updateTextNodes(tempDiv);
+                
+                // Update the preview and hidden field
+                htmlStructure = tempDiv.innerHTML || '.';  // Ensure there's always content
+                descPreview.innerHTML = htmlStructure;
+                descField.value = htmlStructure;
+                
+                textEditModal.hide();
+            } catch (error) {
+                console.error("Error saving text edits:", error);
+                alert("حدث خطأ أثناء حفظ التعديلات. يرجى المحاولة مرة أخرى.");
             }
-            
-            updateTextNodes(tempDiv);
-            
-            // Update the preview and hidden field
-            htmlStructure = tempDiv.innerHTML;
-            descPreview.innerHTML = htmlStructure;
-            descField.value = htmlStructure;
-            
-            textEditModal.hide();
         });
     });
 </script>
