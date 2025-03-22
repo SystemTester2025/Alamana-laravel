@@ -122,6 +122,23 @@
                                 </div>
                             </div>
 
+                            <h5 class="mt-4 mb-3">خيارات العرض</h5>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group mb-3">
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox" id="show_falling_leaves" name="show_falling_leaves" {{ $setting->show_falling_leaves ? 'checked' : '' }}>
+                                            <label class="form-check-label" for="show_falling_leaves">تفعيل تأثير تساقط الأوراق</label>
+                                        </div>
+                                        <small class="form-text text-muted">عند تفعيل هذا الخيار، سيتم عرض تأثير تساقط أوراق الشجر على الموقع</small>
+                                        <div class="mt-2">
+                                            <button type="button" id="test_leaves_btn" class="btn btn-sm btn-secondary">اختبار التأثير</button>
+                                            <span id="leaves_status" class="badge bg-info ms-2">الحالة: {{ $setting->show_falling_leaves ? 'مفعل' : 'غير مفعل' }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
                             <h5 class="mt-4 mb-3">شعارات الموقع</h5>
                             
                             <div class="row">
@@ -184,4 +201,23 @@
         </div>
     </div>
 </div>
+@endsection
+
+@section('extra_js')
+<script>
+    $(document).ready(function() {
+        // Handle test leaves button
+        $('#test_leaves_btn').on('click', function() {
+            var isChecked = $('#show_falling_leaves').prop('checked');
+            console.log('Current show_falling_leaves value:', isChecked);
+            $('#leaves_status').html('الحالة: ' + (isChecked ? 'مفعل' : 'غير مفعل'));
+        });
+
+        // Update status on checkbox change
+        $('#show_falling_leaves').on('change', function() {
+            var isChecked = $(this).prop('checked');
+            $('#leaves_status').html('الحالة: ' + (isChecked ? 'مفعل' : 'غير مفعل'));
+        });
+    });
+</script>
 @endsection 

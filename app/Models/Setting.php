@@ -24,5 +24,6 @@ class Setting extends Model
         'twitter',
         'instagram',
         'linkedin',
+        'show_falling_leaves',
     ];
 }

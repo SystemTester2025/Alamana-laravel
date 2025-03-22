@@ -11,8 +11,17 @@ $(document).ready(function() {
                 $('.main-heading, .sub-heading').css('width', '100%');
             }, 100);
 
-            // Start falling leaves animation after preloader
-            createFallingLeaves();
+            // Start falling leaves animation after preloader only if enabled
+            var fallingLeavesEnabled = $('body').data('falling-leaves');
+            console.log('Falling leaves setting:', fallingLeavesEnabled);
+            
+            if (fallingLeavesEnabled === 'true' || fallingLeavesEnabled === true) {
+                console.log('Starting falling leaves animation');
+                createFallingLeaves();
+            } else {
+                console.log('Falling leaves animation disabled');
+                stopFallingLeaves();
+            }
         }, 600); // Match this with the transition time in CSS
     }, 600); // Time to display preloader (same as our animation duration)
     
@@ -367,8 +376,20 @@ $(document).ready(function() {
     });
 
     // Falling Leaves Animation
+    var leavesActive = false; // Track if leaves are currently active
+    
     function createFallingLeaves() {
+        if (leavesActive) return; // Prevent duplicate creation
+        
+        leavesActive = true;
+        console.log('Creating falling leaves');
+        
         const wrapper = $('.site-wrapper');
+        if (!wrapper.length) {
+            console.log('Site wrapper not found, cannot create leaves');
+            return;
+        }
+        
         const wrapperWidth = wrapper.width();
         const leafCount = 20; // Number of leaves
         const leafColors = ['#21602B', '#8BB729', '#5A8F29', '#3D7A1F']; // Different green shades
@@ -379,6 +400,9 @@ $(document).ready(function() {
         // Create and position leaves
         for (let i = 0; i < leafCount; i++) {
             setTimeout(() => {
+                // Don't create if leaves are no longer active
+                if (!leavesActive) return;
+                
                 // Create random attributes for each leaf
                 const randomLeftPos = Math.floor(Math.random() * wrapperWidth);
                 const randomSize = leafSizes[Math.floor(Math.random() * leafSizes.length)];
@@ -416,7 +440,9 @@ $(document).ready(function() {
                     complete: function() {
                         // Remove leaf after it falls out of view and create a new one
                         $(this).remove();
-                        createNewLeaf();
+                        if (leavesActive) {
+                            createNewLeaf();
+                        }
                     }
                 });
             }, i * 300); // Stagger the creation of leaves
@@ -425,7 +451,11 @@ $(document).ready(function() {
     
     // Create a single new leaf to replace one that fell out of view
     function createNewLeaf() {
+        if (!leavesActive) return;
+        
         const wrapper = $('.site-wrapper');
+        if (!wrapper.length) return;
+        
         const wrapperWidth = wrapper.width();
         const leafColors = ['#21602B', '#8BB729', '#5A8F29', '#3D7A1F'];
         const leafSizes = [15, 20, 25, 30];
@@ -467,10 +497,33 @@ $(document).ready(function() {
             easing: 'linear',
             complete: function() {
                 $(this).remove();
-                createNewLeaf();
+                if (leavesActive) {
+                    createNewLeaf();
+                }
             }
         });
     }
+    
+    function stopFallingLeaves() {
+        leavesActive = false;
+        console.log('Stopping falling leaves');
+        // Remove all existing leaves
+        $('.leaf').fadeOut(500, function() {
+            $(this).remove();
+        });
+    }
+
+    // Initialize falling leaves based on body data attribute
+    setTimeout(function() {
+        var fallingLeavesEnabled = $('body').data('falling-leaves');
+        console.log('Falling leaves setting:', fallingLeavesEnabled);
+        
+        if (fallingLeavesEnabled === 'true' || fallingLeavesEnabled === true) {
+            createFallingLeaves();
+        } else {
+            stopFallingLeaves();
+        }
+    }, 2000); // Delay to ensure everything is loaded
 
     // Initialize active nav state on page load
     setTimeout(function() {

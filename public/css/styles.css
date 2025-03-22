@@ -2823,6 +2823,8 @@ button.section-heading-container[aria-expanded="true"] .arrow-icon svg {
     transform: translateX(-5px);
 }
 
+
+
 /* Responsive styles for Contact Section */
 @media (max-width: 992px) {
     .contact-content {

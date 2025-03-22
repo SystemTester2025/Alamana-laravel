@@ -25,7 +25,7 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     @yield('extra_css')
 </head>
-<body>
+<body data-falling-leaves="{{ isset($settings) && isset($settings->show_falling_leaves) && $settings->show_falling_leaves ? 'true' : 'false' }}">
     <!-- Preloader -->
     <div class="preloader">
         <div class="preloader-content">
