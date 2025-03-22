@@ -142,13 +142,13 @@ class SectionPartSeeder extends Seeder
                 'title' => 'تليفون+واتس اب',
                 'desc' => '<div class="contact-phones">
                         <div class="phone-column">
-                            <div class="phone-number">01003103589</div>
-                            <div class="phone-number">01024113153</div>
+                            <div class="phone-number">+201003103589</div>
+                            <div class="phone-number">+201024113153</div>
                         </div>
                         <div class="phone-column">
-                            <div class="phone-number">01009594480</div>
-                            <div class="phone-number">01093809980</div>
-                            <div class="phone-number">01000766218</div>
+                            <div class="phone-number">+201009594480</div>
+                            <div class="phone-number">+201093809980</div>
+                            <div class="phone-number">+201000766218</div>
                         </div>
                     </div>',
                 'section_id' => $contactSection->id,
