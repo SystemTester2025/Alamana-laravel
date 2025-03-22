@@ -174,7 +174,14 @@ class SectionPartSeeder extends Seeder
                 'key' => 'hero_product_counter',
                 'sort_order' => 1,
             ]);
-            
+            SectionPart::create([
+                'title' => 'الخلفيه الأساسيه',
+                'desc' => 'الخلفيه الأساسيه في القسم الأول',
+                'section_id' => $heroSection->id,
+                'key' => 'hero_background',
+                'sort_order' => 1,
+                'image' => 'images/hero-section/background.jpg',
+            ]);
             SectionPart::create([
                 'title' => 'اكتشف المزيد',
                 'desc' => '',

@@ -237,8 +237,11 @@ $(document).ready(function() {
     // Animated counting for product counter
     const counterAnimation = () => {
         let count = 0;
-        const target = 10;
         const counterElement = $('.counter-text');
+        
+        // Get the actual target from the data attribute
+        const actualValue = counterElement.attr('data-count');
+        const target = parseInt(actualValue, 10) || 10; // Fallback to 10 if parsing fails
         
         const interval = setInterval(() => {
             count++;

@@ -6,8 +6,9 @@
 <div class="site-wrapper">
     <div class="hero-section">
         <div class="overlay"></div>
-        <img src="{{ asset('images/hero-section/background.jpg') }}" alt="Background" class="hero-background">
-            
+        @if(isset($sectionsKeyed['hero-section']->sectionParts->where('key', 'hero_background')->first()->image))
+            <img src="{{ asset($sectionsKeyed['hero-section']->sectionParts->where('key', 'hero_background')->first()->image) }}" alt="Hero background" class="hero-background">
+        @endif
         <!-- Logo with curved background -->
         <div class="logo-container">
             <div class="logo-curved-bg"></div>
@@ -57,9 +58,6 @@
                     @if(isset($sectionsKeyed['hero-section']))
                         <h1 class="main-heading">{{ $sectionsKeyed['hero-section']->title }}</h1>
                         <h1 class="sub-heading">{{ $sectionsKeyed['hero-section']->sub }}</h1>
-                    @else
-                        <h1 class="main-heading">نحن جسر بين الطبيعة</h1>
-                        <h1 class="sub-heading">والأسواق العالمية</h1>
                     @endif
                 </div>
             </div>
@@ -67,8 +65,11 @@
 
         <!-- Product Counter -->
         <div class="product-counter">
-            <div class="counter-text">+{{ count($products) }}</div>
-            <div class="counter-subtext">منتجات</div>
+            <div class="counter-text" data-count="{{ count($products) }}">+{{ count($products) }}</div>
+            
+            @if(isset($sectionsKeyed['hero-section']->sectionParts->where('key', 'hero_product_counter')->first()->title))
+            <div class="counter-subtext">{{ $sectionsKeyed['hero-section']->sectionParts->where('key', 'hero_product_counter')->first()->title }}</div>
+            @endif
             <div class="product-dots">
                 <span class="dot dot-red"></span>
                 <span class="dot dot-white"></span>
