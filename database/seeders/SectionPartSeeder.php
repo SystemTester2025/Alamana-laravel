@@ -71,7 +71,8 @@ class SectionPartSeeder extends Seeder
                 'title' => 'الشركه',
                 'desc' => 'تأسست شركة الأمانة للاستيراد و التصدير عام ٢٠١٢ لتعمل في مجال استيراد و تصدير الحاصلات الزراعية الجافة لذلك فهي أصبحت تمتلك اقوي فريق عمل يتقي المحاصيل ذات الجودة العالية و فرزها و تنقيتها تصديرها لكل بلدان العالم مثل العراق و رومانيا و تركيا و اسبانيا ..... الخ و لسعي الشركة للتوسعات في هذا المجال',
                 'section_id' => $companySection->id,
-                'key' => 'company_benefits',
+                'key' => 'company_about',
+                'image' => 'images/firm-section/firm-bg.jpeg',
                 'sort_order' => 1,
             ]);
         }

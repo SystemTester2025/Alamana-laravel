@@ -176,7 +176,12 @@
                 </div>
                 <div class="col-lg-9 col-md-12">
                     <div class="company-card">
-                        <img src="{{ asset('images/firm-section/firm-bg.jpeg') }}" alt="خلفية الشركة" class="company-background">
+                        @if(isset($sectionsKeyed['company-section']) && $sectionsKeyed['company-section']->sectionParts->where('key', 'company_about')->first())
+                            <h1>{{ $sectionsKeyed['company-section']->sectionParts->where('key', 'company_about')->first()->image }}</h1>
+                            <img src="{{ asset($sectionsKeyed['company-section']->sectionParts->where('key', 'company_about')->first()->image) }}" alt="خلفية الشركة" class="company-background">
+                        @else
+                            <img src="{{ asset('images/firm-section/firm-bg.jpeg') }}" alt="خلفية الشركة" class="company-background">
+                        @endif
                         <div class="company-leaf-icon">
                             <img src="{{ asset('images/leafs/leaf-company.svg') }}" alt="أيقونة ورق" class="leaf-icon">
                         </div>
