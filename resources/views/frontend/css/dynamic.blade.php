@@ -8,11 +8,12 @@
     position: absolute;
     width: 40px;
     height: 40px;
+    padding-left: 100px !important;
     background-image: url('{{ asset($logoPath) }}?v={{ time() }}');
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
-    right: 15px;
+    {{-- right: 15px; --}}
     top: 50%;
     transform: translateY(-50%);
     opacity: 1;

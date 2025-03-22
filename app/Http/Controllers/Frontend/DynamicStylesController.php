@@ -54,7 +54,6 @@ class DynamicStylesController extends Controller
             
             // Return a minimal CSS that won't break the site
             $fallbackCss = "/* Fallback CSS due to error */\n";
-            $fallbackCss .= ".navbar.fixed-navbar::before { display: none; }\n";
             
             return response($fallbackCss)
                 ->header('Content-Type', 'text/css')

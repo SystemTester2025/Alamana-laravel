@@ -297,37 +297,60 @@ $(document).ready(function() {
                 </div>
             `);
             
-            // Handle closing the lightbox
-            $('.lightbox-close').on('click', function() {
-                closeLightbox();
-            });
-            
-            // Close lightbox when clicking on the background
-            $('.product-lightbox').on('click', function(e) {
-                if ($(e.target).hasClass('product-lightbox')) {
-                    closeLightbox();
-                }
-            });
-            
-            // Close lightbox on ESC key
-            $(document).keydown(function(e) {
-                if (e.keyCode === 27) { // ESC key
-                    closeLightbox();
-                }
-            });
+            // Set up all event listeners
+            setupLightboxEvents();
+        } else {
+            // Ensure events are properly bound even if lightbox already exists
+            setupLightboxEvents();
         }
     }
     
+    function setupLightboxEvents() {
+        // Remove any existing event handlers to prevent duplicates
+        $(document).off('click', '.lightbox-close');
+        $('.product-lightbox').off('click');
+        
+        // Handle closing the lightbox with the X button
+        $(document).on('click', '.lightbox-close', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            closeLightbox();
+        });
+        
+        // Close lightbox when clicking on the background
+        $('.product-lightbox').on('click', function(e) {
+            if ($(e.target).hasClass('product-lightbox')) {
+                closeLightbox();
+            }
+        });
+        
+        // Close lightbox on ESC key
+        $(document).keydown(function(e) {
+            if (e.keyCode === 27) { // ESC key
+                closeLightbox();
+            }
+        });
+    }
+    
     function openLightbox(imgSrc, title) {
+        // First ensure the lightbox exists and events are bound
+        createLightbox();
+        
+        // Then set content and open
         $('.lightbox-image').attr('src', imgSrc);
         $('.lightbox-title').text(title);
         $('.product-lightbox').addClass('active');
         $('body').css('overflow', 'hidden'); // Prevent scrolling when lightbox is open
+        
+        // Re-bind events just to be safe
+        setupLightboxEvents();
     }
     
     function closeLightbox() {
         $('.product-lightbox').removeClass('active');
-        $('body').css('overflow', ''); // Restore scrolling
+        setTimeout(function() {
+            $('body').css('overflow', ''); // Restore scrolling after animation completes
+        }, 300);
     }
     
     // Initialize lightbox

@@ -378,33 +378,41 @@ body {
 
 /* Small brand logo for fixed navbar */
 .navbar.fixed-navbar::before {
-    /* This rule is now handled by dynamic CSS */
-    /* Commented out to prevent 404 errors */
-    /*
+    display: block !important; /* Added !important to override dynamic styles */
     content: '';
     position: absolute;
-    width: 40px;
-    height: 40px;
-    background-image: url('/images/logo/logo.svg');
+    width: 30px; /* Smaller for mobile */
+    height: 30px;
+    /* background-image: url('/images/logo/logo.svg'); */
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
-    right: 15px;
+    left: 15px; /* Changed from right to left for small screens */
     top: 50%;
     transform: translateY(-50%);
     opacity: 1;
     transition: opacity 0.3s ease;
-    display: none;
-    */
-    display: none; /* Keep this only */
+    z-index: 1000; /* Ensure it appears above other elements */
 }
 
+/* Update media query to adjust size and position on larger screens */
+@media (min-width: 992px) {
+    .navbar.fixed-navbar::before {
+        width: 40px; /* Larger for desktop */
+        height: 40px;
+        left: auto; /* Reset left position */
+        /* right: 15px; Position on right for desktop */
+    }
+}
+
+/* Remove this duplicate media query */
+/* 
 @media (min-width: 992px) {
     .navbar.fixed-navbar::before {
         display: block;
     }
-    
 }
+*/
 
 /* Enhanced active state for fixed navbar */
 .navbar.fixed-navbar .navbar-nav .nav-link.active {
@@ -447,13 +455,12 @@ body {
 /* Mobile navbar styles */
 @media (max-width: 767px) {
     .navbar.fixed-navbar {
-        padding: 5px 0;
+        padding: 10px 0;
     }
     
     .navbar.fixed-navbar .navbar-container {
-        border: none;
-        max-width: 100%;
-        padding: 5px 15px;
+        padding-left: 50px !important; /* Add space for the logo on the left */
+        padding-right: 15px;
     }
     
     .navbar.fixed-navbar .navbar-toggler {
@@ -3490,4 +3497,5 @@ button.section-heading-container[aria-expanded="true"] .section-heading {
         opacity: 0.7;
     }
 }
+
 
