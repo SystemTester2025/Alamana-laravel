@@ -39,7 +39,7 @@
                             <td>{{ $part->sort_order }}</td>
                             <td>
                                 @if($part->image)
-                                <img src="{{ asset('storage/' . $part->image) }}" alt="{{ $part->title }}" width="50">
+                                <img src="{{ asset($part->image) }}" alt="{{ $part->title }}" width="30">
                                 @else
                                 <span class="text-muted">بدون صورة</span>
                                 @endif

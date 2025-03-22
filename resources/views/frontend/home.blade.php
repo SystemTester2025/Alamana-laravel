@@ -205,9 +205,9 @@
         <div class="container">
             @if(isset($sectionsKeyed['management-section']))
                 <h2 class="section-title text-center mb-5">{{ $sectionsKeyed['management-section']->title }}</h2>
-                @if($sectionsKeyed['management-section']->sub)
+                {{-- @if($sectionsKeyed['management-section']->sub)
                     <h3 class="section-subtitle text-center mb-4">{{ $sectionsKeyed['management-section']->sub }}</h3>
-                @endif
+                @endif --}}
             @endif
             <div class="row">
                 <div class="col-lg-4 order-lg-2">
@@ -541,7 +541,7 @@
                 </h2>
                 <div class="contact-address">
                     @if(isset($sectionsKeyed['contact-section']) && $sectionsKeyed['contact-section']->sectionParts->where('key', 'contact_address')->first())
-                        {{ $sectionsKeyed['contact-section']->sectionParts->where('key', 'contact_address')->first()->desc }}
+                        {!! ($sectionsKeyed['contact-section']->sectionParts->where('key', 'contact_address')->first()->desc) !!}
                     @else
                         <p>طريق السادات كفرداود عند مشارق التحرير</p>
                         <p>بجوار الكلية الجديدة/المنوفية/مصر</p>
@@ -549,25 +549,25 @@
                 </div>
                 <h2 class="contact-title">تليفون+واتس اب</h2>
                 <div class="contact-phones">
-                    <div class="phone-column">
-                        @if(isset($settings) && $settings->phone)
-                            <div class="phone-number">{{ $settings->phone }}</div>
-                        @else
-                            <div class="phone-number">01003103589</div>
-                            <div class="phone-number">01024113153</div>
-                        @endif
+                    @if (isset($sectionsKeyed['contact-section']) && $sectionsKeyed['contact-section']->sectionParts->where('key', 'contact_phones')->first())
+                        {!! ($sectionsKeyed['contact-section']->sectionParts->where('key', 'contact_phones')->first()->desc) !!}
+                    @else
+                        <div class="phone-column">
+                        <div class="phone-number">01003103589</div>
+                        <div class="phone-number">01024113153</div>
                     </div>
                     <div class="phone-column">
                         <div class="phone-number">01009594480</div>
                         <div class="phone-number">01093809980</div>
                         <div class="phone-number">01000766218</div>
-                    </div>
+                        </div>
+                    @endif
                 </div>
             </div>
-            <div class="contact-map col-lg-3 order-lg-2">
-                <div class="map-container">
-                    <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d6913.681934278306!2d30.9359!3d30.0759!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2seg!4v1645568556012!5m2!1sen!2seg" allowfullscreen="" loading="lazy"></iframe>
-                </div>
+        </div>
+        <div class="contact-map col-lg-3 order-lg-2">
+            <div class="map-container">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d6913.681934278306!2d30.9359!3d30.0759!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2seg!4v1645568556012!5m2!1sen!2seg" allowfullscreen="" loading="lazy"></iframe>
             </div>
         </div>
     </div>

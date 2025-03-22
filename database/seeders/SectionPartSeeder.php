@@ -125,8 +125,8 @@ class SectionPartSeeder extends Seeder
         if ($contactSection) {
             SectionPart::create([
                 'title' => 'العنوان',
-                'desc' => 'طريق السادات كفرداود عند مشارق التحرير
-بجوار الكلية الجديدة/المنوفية/مصر',
+                'desc' => '<p>طريق السادات كفرداود عند مشارق التحرير</p>
+                        <p>بجوار الكلية الجديدة/المنوفية/مصر</p>',
                 'section_id' => $contactSection->id,
                 'key' => 'contact_address',
                 'sort_order' => 1,
@@ -134,7 +134,8 @@ class SectionPartSeeder extends Seeder
             
             SectionPart::create([
                 'title' => 'تليفون+واتس اب',
-                'desc' => '01003103589  01024113153 01009594480 01093809980 01000766218',
+                'desc' => '<div class="phone-column">
+',
                 'section_id' => $contactSection->id,
                 'key' => 'contact_phones',
                 'sort_order' => 2,
