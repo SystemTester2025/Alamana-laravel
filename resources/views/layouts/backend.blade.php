@@ -14,114 +14,8 @@
     <!-- Google Fonts - Tajawal -->
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
     
-    <style>
-        body {
-            font-family: 'Tajawal', sans-serif;
-            overflow-x: hidden;
-        }
-        
-        /* Sidebar Styles */
-        .sidebar {
-            min-height: 100vh;
-            background-color: #343a40;
-            color: #fff;
-            position: fixed;
-            top: 0;
-            right: 0;
-            width: 250px;
-            z-index: 1000;
-            transition: all 0.3s;
-            overflow-y: auto;
-        }
-        
-        .sidebar a {
-            color: #fff;
-            text-decoration: none;
-            display: block;
-            padding: 10px 15px;
-        }
-        
-        .sidebar a:hover {
-            background-color: #495057;
-        }
-        
-        .sidebar .active {
-            background-color: #007bff;
-        }
-        
-        /* Content Area */
-        .content {
-            margin-right: 250px;
-            padding: 20px;
-            transition: all 0.3s;
-        }
-        
-        /* Mobile Styles */
-        @media (max-width: 768px) {
-            .sidebar {
-                transform: translateX(100%);
-                box-shadow: -5px 0 15px rgba(0, 0, 0, 0.2);
-            }
-            
-            .sidebar.active {
-                transform: translateX(0);
-            }
-            
-            .content {
-                margin-right: 0;
-            }
-        }
-        
-        .navbar {
-            background-color: #fff;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-        
-        /* Sidebar Toggle Button */
-        .sidebar-toggle {
-            background-color: #343a40;
-            color: white;
-            border: none;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            display: inline-flex;
-            justify-content: center;
-            align-items: center;
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-            z-index: 1001;
-            cursor: pointer;
-        }
-        
-        .sidebar-toggle:focus {
-            outline: none;
-        }
-        
-        @media (min-width: 769px) {
-            .sidebar-toggle {
-                display: none;
-            }
-        }
-        
-        /* Overlay when sidebar is open */
-        .sidebar-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            z-index: 999;
-            display: none;
-        }
-        
-        .sidebar-overlay.active {
-            display: block;
-        }
-    </style>
+    <!-- Backend CSS -->
+    <link rel="stylesheet" href="{{ asset('css/backend/backend.css') }}">
     
     @stack('styles')
 </head>
@@ -226,6 +120,20 @@
             @endif
             
             @yield('content')
+            
+            <!-- Footer -->
+            <footer class="mt-5 pt-4 border-top">
+                <div class="d-flex justify-content-between align-items-center py-3">
+                    <div class="footer-logo">
+                        <a href="mailto:ahmedrmohamed2017@gmail.com">
+                            <img src="{{ asset('images/developer/elnakieb-logo.jpg') }}" alt="Elnakieb Logo" height="30">
+                        </a>
+                    </div>
+                    <div class="footer-text text-muted">
+                        <small>تصميم وتطوير بواسطة <span class="fw-bold"><a href="mailto:ahmedrmohamed2017@gmail.com" target="_blank">النقيب</a></span> &copy; {{ date('Y') }}</small>
+                    </div>
+                </div>
+            </footer>
         </div>
     </div>
     
