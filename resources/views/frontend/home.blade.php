@@ -596,6 +596,22 @@
     </div>
 </section>
 
+<!-- Developer Footer -->
+<div class="developer-footer">
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-center py-3">
+            <div class="footer-logo">
+                <a href="mailto:ahmedrmohamed2017@gmail.com">
+                    <img src="{{ asset('images/developer/elnakieb-logo.jpg') }}" alt="Elnakieb Logo" height="30">
+                </a>
+            </div>
+            <div class="footer-text text-muted">
+                <small>تصميم وتطوير بواسطة <span class="fw-bold"><a href="mailto:ahmedrmohamed2017@gmail.com" target="_blank">النقيب</a></span> &copy; {{ date('Y') }}</small>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- Product Lightbox -->
 <div class="product-lightbox">
     <div class="lightbox-content">
