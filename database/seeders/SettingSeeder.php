@@ -28,6 +28,7 @@ class SettingSeeder extends Seeder
                 'instagram' => 'https://instagram.com/alamana',
                 'linkedin' => 'https://linkedin.com/company/alamana',
                 'show_falling_leaves' => true,
+                'maintenance_mode' => false,
             ]);
         }
     }

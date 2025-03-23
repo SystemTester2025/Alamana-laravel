@@ -12,9 +12,14 @@ use App\Http\Controllers\Backend\BackupController;
 use App\Http\Controllers\Backend\ActivityLogController;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\DynamicStylesController;
+use App\Http\Controllers\Frontend\MaintenanceController;
 
 Route::get('/', [HomeController::class, 'index']);
 Route::get('/css/dynamic-styles.css', [DynamicStylesController::class, 'css'])->name('dynamic.css');
+
+// Maintenance Mode Routes
+Route::get('/maintenance', [MaintenanceController::class, 'index'])->name('maintenance');
+Route::get('/maintenance/preview', [MaintenanceController::class, 'preview'])->name('maintenance.preview');
 
 // Admin Dashboard Routes
 Route::prefix('admin')->middleware(['auth'])->group(function () {

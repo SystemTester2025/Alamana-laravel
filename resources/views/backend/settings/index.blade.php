@@ -137,6 +137,22 @@
                                         </div>
                                     </div>
                                 </div>
+                                
+                                <div class="col-md-6">
+                                    <div class="form-group mb-3">
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox" id="maintenance_mode" name="maintenance_mode" {{ $setting->maintenance_mode ? 'checked' : '' }}>
+                                            <label class="form-check-label" for="maintenance_mode">وضع الصيانة</label>
+                                        </div>
+                                        <small class="form-text text-muted">عند تفعيل هذا الخيار، سيتم عرض صفحة الصيانة بدلاً من الموقع</small>
+                                        <div class="mt-2">
+                                            <a href="{{ route('maintenance.preview') }}" target="_blank" class="btn btn-sm btn-info">معاينة صفحة الصيانة</a>
+                                            <span id="maintenance_status" class="badge {{ $setting->maintenance_mode ? 'bg-danger' : 'bg-success' }} ms-2">
+                                                الحالة: {{ $setting->maintenance_mode ? 'قيد الصيانة' : 'يعمل' }}
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
 
                             <h5 class="mt-4 mb-3">شعارات الموقع</h5>
@@ -213,10 +229,26 @@
             $('#leaves_status').html('الحالة: ' + (isChecked ? 'مفعل' : 'غير مفعل'));
         });
 
-        // Update status on checkbox change
+        // Update leaves status on checkbox change
         $('#show_falling_leaves').on('change', function() {
             var isChecked = $(this).prop('checked');
             $('#leaves_status').html('الحالة: ' + (isChecked ? 'مفعل' : 'غير مفعل'));
+        });
+        
+        // Update maintenance status on checkbox change
+        $('#maintenance_mode').on('change', function() {
+            var isChecked = $(this).prop('checked');
+            var statusText = isChecked ? 'قيد الصيانة' : 'يعمل';
+            var statusClass = isChecked ? 'bg-danger' : 'bg-success';
+            
+            $('#maintenance_status')
+                .removeClass('bg-danger bg-success')
+                .addClass(statusClass)
+                .html('الحالة: ' + statusText);
+                
+            if (isChecked) {
+                alert('تنبيه: عند حفظ الإعدادات، سيتم تفعيل وضع الصيانة وسيتعذر على الزوار الوصول إلى الموقع');
+            }
         });
     });
 </script>

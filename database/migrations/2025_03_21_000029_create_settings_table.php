@@ -26,6 +26,7 @@ return new class extends Migration
             $table->string('instagram')->nullable();
             $table->string('linkedin')->nullable();
             $table->boolean('show_falling_leaves')->default(true);
+            $table->boolean('maintenance_mode')->default(false);
             $table->timestamps();
         });
     }

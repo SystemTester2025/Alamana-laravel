@@ -97,8 +97,9 @@ class SettingController extends Controller
         $setting->instagram = $validated['instagram'] ?? null;
         $setting->linkedin = $validated['linkedin'] ?? null;
         
-        // Explicitly check for the checkbox value
+        // Explicitly check for the checkbox values
         $setting->show_falling_leaves = $request->has('show_falling_leaves') ? true : false;
+        $setting->maintenance_mode = $request->has('maintenance_mode') ? true : false;
 
         // Handle favicon upload
         if ($request->hasFile('favicon')) {
