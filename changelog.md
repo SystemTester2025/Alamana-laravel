@@ -11,6 +11,12 @@
   - Updated routes configuration to properly handle maintenance mode
   - Added toggle functionality in admin settings for maintenance mode
 
+- First-time Setup Automation
+  - Created dedicated AdminSeeder that checks if admin exists before creating
+  - Updated DatabaseSeeder to use the new AdminSeeder
+  - Added setup.php script for easy first-time installation
+  - Implemented comprehensive README with installation instructions
+
 ### Updated
 - Controllers
   - Modified SettingController to handle maintenance mode toggle

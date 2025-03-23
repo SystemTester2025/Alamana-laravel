@@ -14,12 +14,8 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // Create admin user
-        User::factory()->create([
-            'name' => 'Admin',
-            'email' => 'admin@admin.com',
-            'password' => Hash::make('admin'),
-        ]);
+        // Call the AdminSeeder to create the admin user if needed
+        $this->call(AdminSeeder::class);
         
         // Call the ProductSeeder, SectionSeeder, and SectionPartSeeder
         $this->call([
