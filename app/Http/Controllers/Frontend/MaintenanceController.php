@@ -10,6 +10,7 @@ class MaintenanceController extends Controller
 {
     /**
      * Show the maintenance page.
+     * This page is directly accessed by the middleware when maintenance mode is on.
      */
     public function index()
     {
@@ -19,6 +20,7 @@ class MaintenanceController extends Controller
 
     /**
      * Preview the maintenance page (for admin use).
+     * This allows admins to see the maintenance page without activating maintenance mode.
      */
     public function preview()
     {

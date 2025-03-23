@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Frontend;
 use App\Http\Controllers\Controller;
 use App\Models\Product;
 use App\Models\Section;
+use App\Models\Setting;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -40,13 +41,13 @@ class HomeController extends Controller
         $sectionsKeyed = $sections->keyBy('slug');
         // Check if site is in maintenance mode and redirect if needed
         // This is a fallback in case the middleware doesn't catch it
-        $settings = \App\Models\Setting::first();
-        if ($settings && $settings->maintenance_mode) {
-            return redirect()->route('maintenance');
-        }
-        else{
+        $settings = Setting::first();
+        // if ($settings && $settings->maintenance_mode) {
+        //     return redirect()->route('maintenance');
+        // }
+        // else{
             return view('frontend.home', compact('products', 'sections', 'sectionsKeyed'));
-        }
+        // }
 
         
         
