@@ -1,5 +1,14 @@
 # Changelog
 
+## 2023-06-16
+
+### Fixed
+- User Interface Issues
+  - Fixed user dropdown menu in admin dashboard not opening properly
+  - Updated dropdown markup to use Bootstrap 5 syntax instead of Bootstrap 4
+  - Enhanced dropdown styling for better visual appearance
+  - Changed logout mechanism to use a direct form submission instead of a modal
+
 ## 2023-06-15
 
 ### Added
@@ -17,11 +26,19 @@
   - Added setup.php script for easy first-time installation
   - Implemented comprehensive README with installation instructions
 
+- User Profile Management
+  - Added functionality for users to change their email and name
+  - Implemented secure password changing with current password verification
+  - Created user-friendly profile edit interface
+  - Added profile link in the admin dashboard navigation
+  - Implemented validation and error handling for all profile updates
+
 ### Updated
 - Controllers
   - Modified SettingController to handle maintenance mode toggle
   - Improved route organization with proper middleware application
   - Fixed maintenance mode caching for better performance
+  - Added ProfileController for user profile management
 
 ### Frontend
 - Created maintenance page with:

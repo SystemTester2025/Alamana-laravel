@@ -14,6 +14,7 @@ use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\DynamicStylesController;
 use App\Http\Controllers\Frontend\MaintenanceController;
 use App\Http\Middleware\CheckMaintenanceMode;
+use App\Http\Controllers\Backend\ProfileController;
 
 // Routes that bypass maintenance mode check
 Route::get('/css/dynamic-styles.css', [DynamicStylesController::class, 'css'])->name('dynamic.css');
@@ -59,6 +60,11 @@ Route::prefix('admin')->middleware(['auth'])->group(function () {
     Route::get('activity-logs', [ActivityLogController::class, 'index'])->name('activity-logs.index');
     Route::get('activity-logs/{activityLog}', [ActivityLogController::class, 'show'])->name('activity-logs.show');
     Route::delete('activity-logs', [ActivityLogController::class, 'clear'])->name('activity-logs.clear');
+
+    // Profile management
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::put('/profile/password', [ProfileController::class, 'updatePassword'])->name('profile.password.update');
 });
 
 // Auth Routes

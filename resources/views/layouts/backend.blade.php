@@ -95,10 +95,33 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ms-auto">
-                        <li class="nav-item">
-                            <span class="nav-link">
-                                <i class="fas fa-user me-2"></i> {{ auth()->user()->name }}
-                            </span>
+                        <!-- Nav Item - User Information -->
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                <span class="d-none d-lg-inline me-2">{{ Auth::user()->name }}</span>
+                                <img class="img-profile rounded-circle" width="30" height="30"
+                                    src="{{ asset('images/developer/elnakieb-logo.jpg') }}" alt="Profile">
+                            </a>
+                            <!-- Dropdown - User Information -->
+                            <ul class="dropdown-menu dropdown-menu-end shadow" aria-labelledby="userDropdown">
+                                <li>
+                                    <a class="dropdown-item" href="{{ route('profile.edit') }}">
+                                        <i class="fas fa-user fa-sm fa-fw me-2 text-gray-400"></i>
+                                        الملف الشخصي
+                                    </a>
+                                </li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li>
+                                    <form method="POST" action="{{ route('logout') }}">
+                                        @csrf
+                                        <button type="submit" class="dropdown-item">
+                                            <i class="fas fa-sign-out-alt fa-sm fa-fw me-2 text-gray-400"></i>
+                                            تسجيل الخروج
+                                        </button>
+                                    </form>
+                                </li>
+                            </ul>
                         </li>
                     </ul>
                 </div>

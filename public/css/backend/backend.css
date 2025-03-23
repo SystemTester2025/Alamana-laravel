@@ -157,4 +157,34 @@ footer {
         text-align: center;
         gap: 0.5rem;
     }
+}
+
+/* User Profile Dropdown */
+.img-profile {
+    object-fit: cover;
+    border: 2px solid #f8f9fa;
+}
+
+.dropdown-menu {
+    min-width: 12rem;
+}
+
+.dropdown-item {
+    padding: 0.5rem 1rem;
+    display: flex;
+    align-items: center;
+}
+
+.dropdown-item:hover {
+    background-color: #f1f5f9;
+}
+
+.dropdown-item button {
+    text-align: right;
+    width: 100%;
+    border: none;
+    background: transparent;
+    padding: 0;
+    display: flex;
+    align-items: center;
 } 
