@@ -7,6 +7,7 @@ use App\Models\Section;
 use App\Models\Product;
 use App\Models\Contact;
 use App\Models\Image;
+use App\Models\Setting;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
@@ -34,6 +35,13 @@ class DashboardController extends Controller
                                 ->take(5)
                                 ->get();
         
-        return view('backend.dashboard', compact('stats', 'latest_contacts', 'latest_products'));
+        // Get maintenance mode status
+        $maintenanceMode = false;
+        $settings = Setting::first();
+        if ($settings) {
+            $maintenanceMode = $settings->maintenance_mode;
+        }
+        
+        return view('backend.dashboard', compact('stats', 'latest_contacts', 'latest_products', 'maintenanceMode'));
     }
 }

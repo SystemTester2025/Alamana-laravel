@@ -38,7 +38,17 @@ class HomeController extends Controller
         
         // Convert sections to a keyed collection for easier access in views
         $sectionsKeyed = $sections->keyBy('slug');
+        // Check if site is in maintenance mode and redirect if needed
+        // This is a fallback in case the middleware doesn't catch it
+        $settings = \App\Models\Setting::first();
+        if ($settings && $settings->maintenance_mode) {
+            return redirect()->route('maintenance');
+        }
+        else{
+            return view('frontend.home', compact('products', 'sections', 'sectionsKeyed'));
+        }
+
         
-        return view('frontend.home', compact('products', 'sections', 'sectionsKeyed'));
+        
     }
 } 

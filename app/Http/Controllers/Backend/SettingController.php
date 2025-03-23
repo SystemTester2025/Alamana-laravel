@@ -7,6 +7,7 @@ use App\Models\Setting;
 use App\Services\ActivityLogService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Cache;
 
 class SettingController extends Controller
 {
@@ -99,6 +100,9 @@ class SettingController extends Controller
         
         // Explicitly check for the checkbox values
         $setting->show_falling_leaves = $request->has('show_falling_leaves') ? true : false;
+        
+        // Update maintenance mode and clear cache
+        $maintenance_mode_changed = $setting->maintenance_mode != ($request->has('maintenance_mode') ? true : false);
         $setting->maintenance_mode = $request->has('maintenance_mode') ? true : false;
 
         // Handle favicon upload
@@ -137,6 +141,11 @@ class SettingController extends Controller
         }
 
         $setting->save();
+        
+        // Clear maintenance mode cache if it changed
+        if ($maintenance_mode_changed) {
+            Cache::forget('maintenance_mode_status');
+        }
         
         // Log the settings update activity
         ActivityLogService::logUpdated($setting, $oldAttributes, "تم تحديث إعدادات الموقع");

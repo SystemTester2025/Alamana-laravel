@@ -4,6 +4,23 @@
 <div class="container-fluid">
     <h1 class="mb-4">لوحة التحكم الرئيسية</h1>
     
+    <!-- Maintenance Mode Warning -->
+    @if(isset($maintenanceMode) && $maintenanceMode)
+    <div class="alert alert-danger alert-dismissible fade show mb-4" role="alert">
+        <div class="d-flex align-items-center">
+            <i class="fas fa-exclamation-triangle fa-2x me-3"></i>
+            <div>
+                <strong>تنبيه!</strong> موقعك حاليًا في وضع الصيانة. الزوار لا يمكنهم الوصول إلى الموقع، فقط المديرين يمكنهم الوصول إلى لوحة التحكم.
+                <div class="mt-2">
+                    <a href="{{ route('settings.index') }}" class="btn btn-sm btn-light">تعديل الإعدادات</a>
+                    <a href="{{ route('maintenance.preview') }}" target="_blank" class="btn btn-sm btn-outline-light ms-2">معاينة صفحة الصيانة</a>
+                </div>
+            </div>
+        </div>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    @endif
+    
     <!-- Stats Cards -->
     <div class="row mb-4">
         <div class="col-md-4 mb-3">
